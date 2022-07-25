@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: powershell
+        shell: pwsh
     steps:
       - name: checkout
         uses: actions/checkout@v3
