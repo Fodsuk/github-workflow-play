@@ -2,21 +2,8 @@ name: terraform CI
 on: [push]
 jobs:
   terraform-build-and-test:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: pwsh
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: hello from run command
-        run: Write-Host "hello from run command"
-      - name: Azure powershell hello world
-        uses: azure/powershell@v1
-        with:
-         inlineScript: |
-            Write-Host "hello!"
-         azPSVersion: "latest"
+    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-ci.yml@init
+
 
 # creating template
 # on:
