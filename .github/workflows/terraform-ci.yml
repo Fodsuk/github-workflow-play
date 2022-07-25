@@ -1,7 +1,7 @@
 name: terraform CI
 on: [push]
 jobs:
-  terraform-build-and-test:
+  tf:
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-ci.yml@init
     with:
       terraform_version: 1.1.0
