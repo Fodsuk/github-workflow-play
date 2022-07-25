@@ -23,7 +23,6 @@ jobs:
       run:
         shell: pwsh
     steps:
-      - run: az --version
       - name: 'Az login'
         uses: azure/login@v1
         with:
