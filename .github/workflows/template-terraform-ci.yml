@@ -8,11 +8,13 @@ on:
        type: string
        default: src
    secrets:
-     ACTION_CLIENT_ID:
+     CLIENT_ID:
        required: true
-     ACTION_SUBSCRIPTION_ID:
+     CLIENT_SECRET:
        required: true
-     ACTION_TENANT_ID:
+     SUBSCRIPTION_ID:
+       required: true
+     TENANT_ID:
        required: true
 jobs:
   terraform-build-and-test:
@@ -25,9 +27,7 @@ jobs:
       - name: 'Az login'
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.ACTION_CLIENT_ID }}
-          tenant-id: ${{ secrets.ACTION_TENANT_ID }}
-          subscription-id: ${{ secrets.ACTION_SUBSCRIPTION_ID }}
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
       - name: checkout
         uses: actions/checkout@v3
       - name: Install Terraform ${{ inputs.terraform_version }}

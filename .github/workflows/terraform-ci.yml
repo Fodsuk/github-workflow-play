@@ -8,9 +8,10 @@ jobs:
     with:
       terraform_version: 1.1.0
     secrets:
-     ACTION_CLIENT_ID: inherit
-     ACTION_SUBSCRIPTION_ID: inherit
-     ACTION_TENANT_ID: inherit
+     CLIENT_ID: inherit
+     CLIENT_SECRET: inherit
+     SUBSCRIPTION_ID: inherit
+     TENANT_ID: inherit
 
 
 
