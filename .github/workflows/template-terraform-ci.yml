@@ -10,8 +10,6 @@ on:
    secrets:
      CLIENT_ID:
        required: true
-    # CLIENT_SECRET:
-    #   required: true
      SUBSCRIPTION_ID:
        required: true
      TENANT_ID:
@@ -48,6 +46,11 @@ jobs:
         id: validate
         run: terraform validate
         working-directory: ${{ inputs.terraform_directory }}
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+        working-directory: ${{ inputs.terraform_directory }}
+  
 
         # uses: azure/powershell@v1
         # with:
