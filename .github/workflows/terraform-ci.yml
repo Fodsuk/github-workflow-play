@@ -11,9 +11,32 @@ jobs:
         uses: actions/checkout@v3
       - name: hello from run command
         run: Write-Host "hello from run command"
-      - name: powershell-hello-world
+      - name: Azure powershell hello world
         uses: azure/powershell@v1
         with:
          inlineScript: |
             Write-Host "hello!"
          azPSVersion: "latest"
+
+# creating template
+# on:
+#   workflow_call:
+#     inputs:
+#       terraform_version:
+#         required: true
+#         type: string
+
+# using inputs
+#${{ inputs.terraform_version }}
+
+
+# referencing the reusable
+# on:
+#   work_dispatch:
+# jobs:
+#  create_terraform:
+    # use: mikerodda/reponame/.github/workflows/templatename.yml@main
+    #  with:
+    #    terraform_version: 1.2.1
+      
+
