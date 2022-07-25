@@ -20,14 +20,16 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ inputs.terraform_version }}
-      - name: Terraform Format
+      - name: Terraform Format Check
         id: fmt
         run: terraform fmt -check
+        working-directory: ${{ inputs.terraform_directory }}
+        continue-on-error: false
       - name: Terraform Init
         id: init
         run: terraform init
         working-directory: ${{ inputs.terraform_directory }}
-      - name: Terraform Validate
+      - name: Terraform Validation
         id: validate
         run: terraform validate
         working-directory: ${{ inputs.terraform_directory }}
