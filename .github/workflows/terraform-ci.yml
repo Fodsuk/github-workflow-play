@@ -13,8 +13,6 @@ jobs:
      SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
      TENANT_ID: ${{ secrets.TENANT_ID }}
 
-
-
 # creating template
 # on:
 #   workflow_call:
