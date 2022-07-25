@@ -7,6 +7,15 @@ on:
      terraform_directory:
        type: string
        default: src
+   secrets:
+     ACTION_CLIENT_ID:
+       required: true
+     ACTION_CLIENT_SECRET:
+       required: true
+     ACTION_SUBSCRIPTION_ID:
+       required: true
+     ACTION_TENANT_ID:
+       required: true
 jobs:
   terraform-build-and-test:
     runs-on: ubuntu-latest
