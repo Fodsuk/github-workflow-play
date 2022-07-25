@@ -8,10 +8,10 @@ jobs:
     with:
       terraform_version: 1.1.0
     secrets:
-     CLIENT_ID: inherit
-     CLIENT_SECRET: inherit
-     SUBSCRIPTION_ID: inherit
-     TENANT_ID: inherit
+     CLIENT_ID: ${{ secrets.CLIENT_ID }}
+     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+     SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+     TENANT_ID: bc978385-56f9-45a3-8dee-7012ae8231c6
 
 
 
