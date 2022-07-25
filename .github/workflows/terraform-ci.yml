@@ -1,0 +1,11 @@
+name: terraform CI
+on: [push]
+jobs:
+  terraform-build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: azure/powershell@v1
+        with:
+         inlineScript: |
+            Write-Host "hello!"
