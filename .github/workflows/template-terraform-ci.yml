@@ -10,8 +10,6 @@ on:
    secrets:
      ACTION_CLIENT_ID:
        required: true
-     ACTION_CLIENT_SECRET:
-       required: true
      ACTION_SUBSCRIPTION_ID:
        required: true
      ACTION_TENANT_ID:
@@ -25,7 +23,7 @@ jobs:
       run:
         shell: pwsh
     steps:
-      - name: 'Az CLI login'
+      - name: 'Az login'
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.ACTION_CLIENT_ID }}
