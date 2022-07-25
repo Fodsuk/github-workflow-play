@@ -1,0 +1,21 @@
+on:
+ workflow_call:
+   inputs:
+     terraform_version:
+       required: true
+       type: string
+jobs:
+  terraform-build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Install Terraform ${{ inputs.terraform_version }}
+        uses: azure/powershell@v1
+        with:
+         inlineScript: |
+            Write-Host "installing Terraform ${{ inputs.terraform_version }}"
+         azPSVersion: "latest"
