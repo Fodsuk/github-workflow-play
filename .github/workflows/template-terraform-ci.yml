@@ -5,7 +5,6 @@ on:
        required: true
        type: string
      terraform_directory:
-       required: true
        type: string
        default: src
 jobs:
