@@ -11,6 +11,8 @@ jobs:
      ACTION_SUBSCRIPTION_ID: inherit
      ACTION_TENANT_ID: inherit
 
+
+
 # creating template
 # on:
 #   workflow_call:
