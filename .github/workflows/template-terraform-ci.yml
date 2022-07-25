@@ -4,9 +4,6 @@ on:
      terraform_version:
        required: true
        type: string
-   secrets:
-      a_token:
-       required: true
 jobs:
   terraform-build-and-test:
     runs-on: ubuntu-latest
@@ -17,9 +14,9 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - name: Install Terraform ${{ inputs.terraform_version }}
-        uses: azure/powershell@v1
-        with:
-         inlineScript: |
-            Write-Host "Installing Terraform ${{ inputs.terraform_version }}"
-            Write-Host "the secret ${{ secrets.a_token }}"
-         azPSVersion: "latest"
+        # uses: azure/powershell@v1
+        # with:
+        #  inlineScript: |
+        #     Write-Host "Installing Terraform ${{ inputs.terraform_version }}"
+        #     Write-Host "the secret ${{ secrets.a_token }}"
+        #  azPSVersion: "latest"
