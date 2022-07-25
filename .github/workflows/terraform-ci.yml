@@ -4,8 +4,10 @@ jobs:
   terraform-build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: azure/powershell@v1
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: powershell-hello-world
+        uses: azure/powershell@v1
         with:
          inlineScript: |
             Write-Host "hello!"
