@@ -23,11 +23,10 @@ jobs:
       run:
         shell: pwsh
     steps:
-      - run: az --version
       - name: 'Az login'
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.ACTION_CLIENT_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
       - name: checkout
