@@ -45,10 +45,12 @@ jobs:
       - name: Terraform Validation
         id: validate
         run: terraform validate
+        continue-on-error: false
         working-directory: ${{ inputs.terraform_directory }}
       - name: Terraform Plan
         id: plan
         run: terraform plan
+        continue-on-error: false
         working-directory: ${{ inputs.terraform_directory }}
   
 
