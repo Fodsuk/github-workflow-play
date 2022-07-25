@@ -1,5 +1,7 @@
 name: terraform CI
 on: [push]
+permissions:
+  id-token: write
 jobs:
   tf:
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-ci.yml@init

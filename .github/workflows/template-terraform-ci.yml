@@ -14,8 +14,6 @@ on:
        required: true
      ACTION_TENANT_ID:
        required: true
-permissions:
-  id-token: write
 jobs:
   terraform-build-and-test:
     runs-on: ubuntu-latest
