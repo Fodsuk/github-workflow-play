@@ -67,8 +67,13 @@ jobs:
               terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
-      - run: Get-ChildItem
+      - run: ls
         working-directory: ${{ inputs.terraform_directory }}
+      - name: Destroy Fixtures
+        if: ${{ inputs.has_fixtures }}
+        run: terraform apply -destroy --auto-approve
+        continue-on-error: false
+        working-directory: ${{ inputs.fixture_directory }}
       # - name: Terraform Plan
       #   id: plan
       #   run: terraform plan

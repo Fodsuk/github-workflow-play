@@ -2,13 +2,13 @@ locals {
   location = "UK South"
 }
 resource "random_string" "rg_name" {
-  length  = 16
+  length  = 8
   special = false
   numeric = false
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = random_string.rg_name.result
+  name     = "fixtures-sql-${random_string.rg_name.result}"
   location = local.location
 }
 
