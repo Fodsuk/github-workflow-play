@@ -30,4 +30,4 @@ override.tf.json
 
 fixture.auto.tfvars
 plan.raw
-variables_and_outsputs.json
+variables_and_outputs.json
