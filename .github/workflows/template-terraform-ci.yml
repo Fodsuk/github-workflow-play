@@ -28,6 +28,7 @@ jobs:
     defaults:
       run:
         shell: pwsh
+        working-directory: ${{ inputs.terraform_directory }}
     env:
       ARM_CLIENT_ID: "${{ secrets.CLIENT_ID }}"
       ARM_CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
@@ -47,18 +48,14 @@ jobs:
       - name: Terraform Format Check
         id: fmt
         run: terraform fmt -check
-        working-directory: ${{ inputs.terraform_directory }}
         continue-on-error: false
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ${{ inputs.terraform_directory }}
       - name: Terraform Validation
         id: validate
         run: terraform validate
         continue-on-error: false
-        working-directory: ${{ inputs.terraform_directory }}
-
       - name: Create Fixtures
         if: ${{ inputs.has_fixtures }}
         run: |
@@ -67,18 +64,23 @@ jobs:
               terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
-      - run: ls
-        working-directory: ${{ inputs.terraform_directory }}
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+        continue-on-error: false
+      - name: Terraform Apply
+        id: plan
+        run: terraform apply --auto-approve
+        continue-on-error: false
+        # run tests
+      - name: Destroy Terraform
+        run: terraform apply -destroy --auto-approve
       - name: Destroy Fixtures
         if: ${{ inputs.has_fixtures }}
         run: terraform apply -destroy --auto-approve
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
-      # - name: Terraform Plan
-      #   id: plan
-      #   run: terraform plan
-      #   continue-on-error: false
-      #   working-directory: ${{ inputs.terraform_directory }}
+
       # - name: Create the plan summary
       #   uses: actions/github-script@v6
       #   if: always()
