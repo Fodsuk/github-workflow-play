@@ -10,6 +10,6 @@ resource "azurerm_mssql_server" "example" {
 
 resource "random_string" "sql_password" {
   length  = 24
-  special = false
-  numeric = false
+  special = true
+  numeric = true
 }
