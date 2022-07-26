@@ -83,7 +83,8 @@ jobs:
       - name: Destroy Terraform
         run: terraform apply -destroy --auto-approve
       - name: Destroy Fixtures
-        if: ${{ inputs.has_fixtures }}
+        #if: ${{ inputs.has_fixtures }}
+        if: always()
         run: terraform apply -destroy --auto-approve
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
