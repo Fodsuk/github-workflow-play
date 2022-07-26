@@ -45,6 +45,17 @@ jobs:
       # uses: azure/login@v1
       #  with:
       #    creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+      - name: Run Tests Demo
+        run: |
+          Get-Module -ListAvailable Pester | Select-Object Name, Version
+          Import-Module Pester
+          $pester_config = [PesterConfiguration]::Default
+          $pester_config.Output.Verbosity = "Detailed"
+          $pester_config.Filter.Tag = "ci"
+
+          Invoke-Pester -Configuration $pester_config
+        working-directory: ${{ inputs.test_directory }}
+
       - name: checkout
         uses: actions/checkout@v3
       - name: Install Terraform ${{ inputs.terraform_version }}
