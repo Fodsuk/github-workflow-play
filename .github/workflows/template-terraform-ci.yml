@@ -93,5 +93,5 @@ jobs:
             core.setOutput('summary', output);
       - name: Write the step summary
         if: always()
-        run: cat summary.md >> $GITHUB_STEP_SUMMARY
+        run: cat ${{ inputs.terraform_directory }}/summary.md >> $GITHUB_STEP_SUMMARY
         working-directory: ${{ inputs.terraform_directory }}
