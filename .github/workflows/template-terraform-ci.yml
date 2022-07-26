@@ -45,6 +45,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ inputs.terraform_version }}
+          terraform_wrapper: false
       - name: Terraform Format Check
         id: fmt
         run: terraform fmt -check
@@ -61,7 +62,7 @@ jobs:
         run: |
               terraform init
               terraform apply --auto-approve
-              terraform output | tee ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
+              terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
       - name: Terraform Plan
