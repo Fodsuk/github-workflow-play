@@ -63,6 +63,7 @@ jobs:
               terraform apply --auto-approve
               Write-Host '${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars'
               terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
+              cat ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
       - name: Terraform Plan
