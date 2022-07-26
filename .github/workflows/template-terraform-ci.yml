@@ -93,7 +93,7 @@ jobs:
           $pester_config.Filter.Tag = "ci"
 
           Invoke-Pester -Configuration $pester_config
-        working-directory: ${{ parameters.test_directory }}
+        working-directory: ${{ inputs.test_directory }}
         # destroy all resources
       - name: Destroy Terraform
         if: always()
