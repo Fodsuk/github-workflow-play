@@ -13,6 +13,12 @@ on:
      has_fixtures:
        type: boolean
        default: true
+     test_directory:
+       type: string
+       default: spec
+     has_tests:
+       type: boolean
+       default: true
    secrets:
      CLIENT_ID:
        required: true
@@ -71,9 +77,24 @@ jobs:
         continue-on-error: false
       - name: Terraform Apply
         id: apply
-        run: terraform apply --auto-approve
+        run: |
+          terraform apply --auto-approve
+          
+          # generate variables_and_outputs.json (can be used by pester tests)
+          terraform plan -json -out="plan.raw"
+          terraform show -json plan.raw > variables_and_outputs.json
         continue-on-error: false
         # run tests
+      - name: Run Tests
+        if: ${{ inputs.has_tests }} && always()
+        run: |
+          $pester_config = [PesterConfiguration]::Default
+          $pester_config.Output.Verbosity = "Detailed"
+          $pester_config.Filter.Tag = "ci"
+
+          Invoke-Pester -Configuration $pester_config
+        working-directory: ${{ parameters.test_directory }}
+        # destroy all resources
       - name: Destroy Terraform
         if: always()
         run: terraform apply -destroy --auto-approve

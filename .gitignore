@@ -29,3 +29,5 @@ override.tf.json
 # example: *tfplan*
 
 fixture.auto.tfvars
+plan.raw
+variables_and_outsputs.json

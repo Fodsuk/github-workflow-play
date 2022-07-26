@@ -1,0 +1,479 @@
+{
+    "format_version": "1.0",
+    "terraform_version": "1.1.7",
+    "variables": {
+        "location": {
+            "value": "UK South"
+        },
+        "resource_group_name": {
+            "value": "fixtures-sql-xBNdBNCt"
+        }
+    },
+    "planned_values": {
+        "outputs": {
+            "sql_server_minimum_tls_version": {
+                "sensitive": false,
+                "value": "1.2"
+            },
+            "sql_server_resource_group_name": {
+                "sensitive": false,
+                "value": "fixtures-sql-xBNdBNCt"
+            }
+        },
+        "root_module": {
+            "resources": [
+                {
+                    "address": "azurerm_mssql_server.schroders",
+                    "mode": "managed",
+                    "type": "azurerm_mssql_server",
+                    "name": "schroders",
+                    "provider_name": "registry.terraform.io/hashicorp/azurerm",
+                    "schema_version": 0,
+                    "values": {
+                        "administrator_login": "test",
+                        "administrator_login_password": "[JE(r)zgBV!3z41NVhJvs4}q",
+                        "azuread_administrator": [],
+                        "connection_policy": "Default",
+                        "fully_qualified_domain_name": "schroderssql.database.windows.net",
+                        "id": "/subscriptions/93d689f8-0bd6-4c60-8b3a-929c1a6a8c45/resourceGroups/fixtures-sql-xBNdBNCt/providers/Microsoft.Sql/servers/schroderssql",
+                        "identity": [],
+                        "location": "uksouth",
+                        "minimum_tls_version": "1.2",
+                        "name": "schroderssql",
+                        "outbound_network_restriction_enabled": false,
+                        "primary_user_assigned_identity_id": "",
+                        "public_network_access_enabled": true,
+                        "resource_group_name": "fixtures-sql-xBNdBNCt",
+                        "restorable_dropped_database_ids": [],
+                        "tags": {},
+                        "timeouts": null,
+                        "version": "12.0"
+                    },
+                    "sensitive_values": {
+                        "azuread_administrator": [],
+                        "identity": [],
+                        "restorable_dropped_database_ids": [],
+                        "tags": {}
+                    }
+                },
+                {
+                    "address": "random_string.sql_password",
+                    "mode": "managed",
+                    "type": "random_string",
+                    "name": "sql_password",
+                    "provider_name": "registry.terraform.io/hashicorp/random",
+                    "schema_version": 2,
+                    "values": {
+                        "id": "[JE(r)zgBV!3z41NVhJvs4}q",
+                        "keepers": null,
+                        "length": 24,
+                        "lower": true,
+                        "min_lower": 0,
+                        "min_numeric": 0,
+                        "min_special": 0,
+                        "min_upper": 0,
+                        "number": true,
+                        "numeric": true,
+                        "override_special": null,
+                        "result": "[JE(r)zgBV!3z41NVhJvs4}q",
+                        "special": true,
+                        "upper": true
+                    },
+                    "sensitive_values": {}
+                }
+            ]
+        }
+    },
+    "resource_drift": [
+        {
+            "address": "azurerm_mssql_server.schroders",
+            "mode": "managed",
+            "type": "azurerm_mssql_server",
+            "name": "schroders",
+            "provider_name": "registry.terraform.io/hashicorp/azurerm",
+            "change": {
+                "actions": [
+                    "update"
+                ],
+                "before": {
+                    "administrator_login": "test",
+                    "administrator_login_password": "[JE(r)zgBV!3z41NVhJvs4}q",
+                    "azuread_administrator": [],
+                    "connection_policy": "Default",
+                    "fully_qualified_domain_name": "schroderssql.database.windows.net",
+                    "id": "/subscriptions/93d689f8-0bd6-4c60-8b3a-929c1a6a8c45/resourceGroups/fixtures-sql-xBNdBNCt/providers/Microsoft.Sql/servers/schroderssql",
+                    "identity": [],
+                    "location": "uksouth",
+                    "minimum_tls_version": "1.2",
+                    "name": "schroderssql",
+                    "outbound_network_restriction_enabled": false,
+                    "primary_user_assigned_identity_id": "",
+                    "public_network_access_enabled": true,
+                    "resource_group_name": "fixtures-sql-xBNdBNCt",
+                    "restorable_dropped_database_ids": [],
+                    "tags": null,
+                    "timeouts": null,
+                    "version": "12.0"
+                },
+                "after": {
+                    "administrator_login": "test",
+                    "administrator_login_password": "[JE(r)zgBV!3z41NVhJvs4}q",
+                    "azuread_administrator": [],
+                    "connection_policy": "Default",
+                    "fully_qualified_domain_name": "schroderssql.database.windows.net",
+                    "id": "/subscriptions/93d689f8-0bd6-4c60-8b3a-929c1a6a8c45/resourceGroups/fixtures-sql-xBNdBNCt/providers/Microsoft.Sql/servers/schroderssql",
+                    "identity": [],
+                    "location": "uksouth",
+                    "minimum_tls_version": "1.2",
+                    "name": "schroderssql",
+                    "outbound_network_restriction_enabled": false,
+                    "primary_user_assigned_identity_id": "",
+                    "public_network_access_enabled": true,
+                    "resource_group_name": "fixtures-sql-xBNdBNCt",
+                    "restorable_dropped_database_ids": [],
+                    "tags": {},
+                    "timeouts": null,
+                    "version": "12.0"
+                },
+                "after_unknown": {},
+                "before_sensitive": {
+                    "administrator_login_password": true,
+                    "azuread_administrator": [],
+                    "identity": [],
+                    "restorable_dropped_database_ids": []
+                },
+                "after_sensitive": {
+                    "administrator_login_password": true,
+                    "azuread_administrator": [],
+                    "identity": [],
+                    "restorable_dropped_database_ids": [],
+                    "tags": {}
+                }
+            }
+        }
+    ],
+    "resource_changes": [
+        {
+            "address": "azurerm_mssql_server.schroders",
+            "mode": "managed",
+            "type": "azurerm_mssql_server",
+            "name": "schroders",
+            "provider_name": "registry.terraform.io/hashicorp/azurerm",
+            "change": {
+                "actions": [
+                    "no-op"
+                ],
+                "before": {
+                    "administrator_login": "test",
+                    "administrator_login_password": "[JE(r)zgBV!3z41NVhJvs4}q",
+                    "azuread_administrator": [],
+                    "connection_policy": "Default",
+                    "fully_qualified_domain_name": "schroderssql.database.windows.net",
+                    "id": "/subscriptions/93d689f8-0bd6-4c60-8b3a-929c1a6a8c45/resourceGroups/fixtures-sql-xBNdBNCt/providers/Microsoft.Sql/servers/schroderssql",
+                    "identity": [],
+                    "location": "uksouth",
+                    "minimum_tls_version": "1.2",
+                    "name": "schroderssql",
+                    "outbound_network_restriction_enabled": false,
+                    "primary_user_assigned_identity_id": "",
+                    "public_network_access_enabled": true,
+                    "resource_group_name": "fixtures-sql-xBNdBNCt",
+                    "restorable_dropped_database_ids": [],
+                    "tags": {},
+                    "timeouts": null,
+                    "version": "12.0"
+                },
+                "after": {
+                    "administrator_login": "test",
+                    "administrator_login_password": "[JE(r)zgBV!3z41NVhJvs4}q",
+                    "azuread_administrator": [],
+                    "connection_policy": "Default",
+                    "fully_qualified_domain_name": "schroderssql.database.windows.net",
+                    "id": "/subscriptions/93d689f8-0bd6-4c60-8b3a-929c1a6a8c45/resourceGroups/fixtures-sql-xBNdBNCt/providers/Microsoft.Sql/servers/schroderssql",
+                    "identity": [],
+                    "location": "uksouth",
+                    "minimum_tls_version": "1.2",
+                    "name": "schroderssql",
+                    "outbound_network_restriction_enabled": false,
+                    "primary_user_assigned_identity_id": "",
+                    "public_network_access_enabled": true,
+                    "resource_group_name": "fixtures-sql-xBNdBNCt",
+                    "restorable_dropped_database_ids": [],
+                    "tags": {},
+                    "timeouts": null,
+                    "version": "12.0"
+                },
+                "after_unknown": {},
+                "before_sensitive": {
+                    "administrator_login_password": true,
+                    "azuread_administrator": [],
+                    "identity": [],
+                    "restorable_dropped_database_ids": [],
+                    "tags": {}
+                },
+                "after_sensitive": {
+                    "administrator_login_password": true,
+                    "azuread_administrator": [],
+                    "identity": [],
+                    "restorable_dropped_database_ids": [],
+                    "tags": {}
+                }
+            }
+        },
+        {
+            "address": "random_string.sql_password",
+            "mode": "managed",
+            "type": "random_string",
+            "name": "sql_password",
+            "provider_name": "registry.terraform.io/hashicorp/random",
+            "change": {
+                "actions": [
+                    "no-op"
+                ],
+                "before": {
+                    "id": "[JE(r)zgBV!3z41NVhJvs4}q",
+                    "keepers": null,
+                    "length": 24,
+                    "lower": true,
+                    "min_lower": 0,
+                    "min_numeric": 0,
+                    "min_special": 0,
+                    "min_upper": 0,
+                    "number": true,
+                    "numeric": true,
+                    "override_special": null,
+                    "result": "[JE(r)zgBV!3z41NVhJvs4}q",
+                    "special": true,
+                    "upper": true
+                },
+                "after": {
+                    "id": "[JE(r)zgBV!3z41NVhJvs4}q",
+                    "keepers": null,
+                    "length": 24,
+                    "lower": true,
+                    "min_lower": 0,
+                    "min_numeric": 0,
+                    "min_special": 0,
+                    "min_upper": 0,
+                    "number": true,
+                    "numeric": true,
+                    "override_special": null,
+                    "result": "[JE(r)zgBV!3z41NVhJvs4}q",
+                    "special": true,
+                    "upper": true
+                },
+                "after_unknown": {},
+                "before_sensitive": {},
+                "after_sensitive": {}
+            }
+        }
+    ],
+    "output_changes": {
+        "sql_server_minimum_tls_version": {
+            "actions": [
+                "no-op"
+            ],
+            "before": "1.2",
+            "after": "1.2",
+            "after_unknown": false,
+            "before_sensitive": false,
+            "after_sensitive": false
+        },
+        "sql_server_resource_group_name": {
+            "actions": [
+                "no-op"
+            ],
+            "before": "fixtures-sql-xBNdBNCt",
+            "after": "fixtures-sql-xBNdBNCt",
+            "after_unknown": false,
+            "before_sensitive": false,
+            "after_sensitive": false
+        }
+    },
+    "prior_state": {
+        "format_version": "1.0",
+        "terraform_version": "1.1.7",
+        "values": {
+            "outputs": {
+                "sql_server_minimum_tls_version": {
+                    "sensitive": false,
+                    "value": "1.2"
+                },
+                "sql_server_resource_group_name": {
+                    "sensitive": false,
+                    "value": "fixtures-sql-xBNdBNCt"
+                }
+            },
+            "root_module": {
+                "resources": [
+                    {
+                        "address": "azurerm_mssql_server.schroders",
+                        "mode": "managed",
+                        "type": "azurerm_mssql_server",
+                        "name": "schroders",
+                        "provider_name": "registry.terraform.io/hashicorp/azurerm",
+                        "schema_version": 0,
+                        "values": {
+                            "administrator_login": "test",
+                            "administrator_login_password": "[JE(r)zgBV!3z41NVhJvs4}q",
+                            "azuread_administrator": [],
+                            "connection_policy": "Default",
+                            "fully_qualified_domain_name": "schroderssql.database.windows.net",
+                            "id": "/subscriptions/93d689f8-0bd6-4c60-8b3a-929c1a6a8c45/resourceGroups/fixtures-sql-xBNdBNCt/providers/Microsoft.Sql/servers/schroderssql",
+                            "identity": [],
+                            "location": "uksouth",
+                            "minimum_tls_version": "1.2",
+                            "name": "schroderssql",
+                            "outbound_network_restriction_enabled": false,
+                            "primary_user_assigned_identity_id": "",
+                            "public_network_access_enabled": true,
+                            "resource_group_name": "fixtures-sql-xBNdBNCt",
+                            "restorable_dropped_database_ids": [],
+                            "tags": {},
+                            "timeouts": null,
+                            "version": "12.0"
+                        },
+                        "sensitive_values": {
+                            "azuread_administrator": [],
+                            "identity": [],
+                            "restorable_dropped_database_ids": [],
+                            "tags": {}
+                        },
+                        "depends_on": [
+                            "random_string.sql_password"
+                        ]
+                    },
+                    {
+                        "address": "random_string.sql_password",
+                        "mode": "managed",
+                        "type": "random_string",
+                        "name": "sql_password",
+                        "provider_name": "registry.terraform.io/hashicorp/random",
+                        "schema_version": 2,
+                        "values": {
+                            "id": "[JE(r)zgBV!3z41NVhJvs4}q",
+                            "keepers": null,
+                            "length": 24,
+                            "lower": true,
+                            "min_lower": 0,
+                            "min_numeric": 0,
+                            "min_special": 0,
+                            "min_upper": 0,
+                            "number": true,
+                            "numeric": true,
+                            "override_special": null,
+                            "result": "[JE(r)zgBV!3z41NVhJvs4}q",
+                            "special": true,
+                            "upper": true
+                        },
+                        "sensitive_values": {}
+                    }
+                ]
+            }
+        }
+    },
+    "configuration": {
+        "provider_config": {
+            "azurerm": {
+                "name": "azurerm",
+                "version_constraint": "~\u003e 3.14.0",
+                "expressions": {
+                    "features": [
+                        {}
+                    ]
+                }
+            },
+            "random": {
+                "name": "random",
+                "version_constraint": "~\u003e 3.3.0"
+            }
+        },
+        "root_module": {
+            "outputs": {
+                "sql_server_minimum_tls_version": {
+                    "expression": {
+                        "references": [
+                            "azurerm_mssql_server.schroders.minimum_tls_version",
+                            "azurerm_mssql_server.schroders"
+                        ]
+                    }
+                },
+                "sql_server_resource_group_name": {
+                    "expression": {
+                        "references": [
+                            "azurerm_mssql_server.schroders.resource_group_name",
+                            "azurerm_mssql_server.schroders"
+                        ]
+                    }
+                }
+            },
+            "resources": [
+                {
+                    "address": "azurerm_mssql_server.schroders",
+                    "mode": "managed",
+                    "type": "azurerm_mssql_server",
+                    "name": "schroders",
+                    "provider_config_key": "azurerm",
+                    "expressions": {
+                        "administrator_login": {
+                            "constant_value": "test"
+                        },
+                        "administrator_login_password": {
+                            "references": [
+                                "random_string.sql_password.result",
+                                "random_string.sql_password"
+                            ]
+                        },
+                        "location": {
+                            "references": [
+                                "var.location"
+                            ]
+                        },
+                        "minimum_tls_version": {
+                            "constant_value": "1.2"
+                        },
+                        "name": {
+                            "constant_value": "schroderssql"
+                        },
+                        "resource_group_name": {
+                            "references": [
+                                "var.resource_group_name"
+                            ]
+                        },
+                        "version": {
+                            "constant_value": "12.0"
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "random_string.sql_password",
+                    "mode": "managed",
+                    "type": "random_string",
+                    "name": "sql_password",
+                    "provider_config_key": "random",
+                    "expressions": {
+                        "length": {
+                            "constant_value": 24
+                        },
+                        "numeric": {
+                            "constant_value": true
+                        },
+                        "special": {
+                            "constant_value": true
+                        }
+                    },
+                    "schema_version": 2
+                }
+            ],
+            "variables": {
+                "location": {
+                    "description": "default location"
+                },
+                "resource_group_name": {
+                    "description": "resource group name"
+                }
+            }
+        }
+    }
+}
