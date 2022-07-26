@@ -62,7 +62,6 @@ jobs:
               terraform init
               terraform apply --auto-approve
               terraform output | tee ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
-              cat ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
       - name: Terraform Plan
