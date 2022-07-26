@@ -1,3 +1,6 @@
+locals {
+  location = "UK South"
+}
 resource "random_string" "rg_name" {
   length  = 16
   special = false
@@ -6,7 +9,7 @@ resource "random_string" "rg_name" {
 
 resource "azurerm_resource_group" "rg" {
   name     = random_string.rg_name.result
-  location = var.location
+  location = local.location
 }
 
 output "resource_group_name" {
@@ -14,5 +17,5 @@ output "resource_group_name" {
 }
 
 output "location" {
-  value = "uk south"
+  value = local.location
 }
