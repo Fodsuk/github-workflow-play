@@ -61,14 +61,8 @@ jobs:
         run: |
               terraform init
               terraform apply --auto-approve
-              Write-Host "before"
-              terraform output
-              Write-Host "after"
-              Write-Host "before raw"
-              terraform output -raw
-              Write-Host "after raw"
-              Set-Content -Value "$(terraform output)" -Path "${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars"
-              Get-Content "${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars"
+              Write-Host '${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars'
+              terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
       - name: Terraform Plan
