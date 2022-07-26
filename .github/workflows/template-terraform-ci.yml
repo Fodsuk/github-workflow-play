@@ -7,6 +7,12 @@ on:
      terraform_directory:
        type: string
        default: src
+     fixture_directory:
+       type: string
+       default: fixtures
+     has_fixtures:
+       type: bool
+       default: true
    secrets:
      CLIENT_ID:
        required: true
@@ -52,47 +58,56 @@ jobs:
         run: terraform validate
         continue-on-error: false
         working-directory: ${{ inputs.terraform_directory }}
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan
+
+      - name: Create Fixtures
+        if: ${{ inputs.has_fixtures }}
+        run: |
+              terraform init
+              terraform apply --auto-approve
+              terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
+        working-directory: ${{ inputs.fixture_directory }}
+      - run: Get-ChildItem
         working-directory: ${{ inputs.terraform_directory }}
-      - name: Create the plan summary
-        uses: actions/github-script@v6
-        if: always()
-        id: summary
-        env:
-          PLAN: '${{ steps.plan.outputs.stdout }}'
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            // 1. Prep the output
-            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            <details><summary>Validation Output</summary>
-            \`\`\`\n
-            ${{ steps.validate.outputs.stdout }}
-            \`\`\`
-            </details>
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+      # - name: Terraform Plan
+      #   id: plan
+      #   run: terraform plan
+      #   continue-on-error: false
+      #   working-directory: ${{ inputs.terraform_directory }}
+      # - name: Create the plan summary
+      #   uses: actions/github-script@v6
+      #   if: always()
+      #   id: summary
+      #   env:
+      #     PLAN: '${{ steps.plan.outputs.stdout }}'
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       // 1. Prep the output
+      #       const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+      #       #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+      #       #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+      #       <details><summary>Validation Output</summary>
+      #       \`\`\`\n
+      #       ${{ steps.validate.outputs.stdout }}
+      #       \`\`\`
+      #       </details>
+      #       #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
             
-            <details><summary>Show Plan</summary>
+      #       <details><summary>Show Plan</summary>
             
-            \`\`\`\n
-            ${process.env.PLAN}
-            \`\`\`
+      #       \`\`\`\n
+      #       ${process.env.PLAN}
+      #       \`\`\`
             
-            </details>
+      #       </details>
             
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ inputs.terraform_directory }}\`, Workflow: \`${{ github.workflow }}\`*`;
+      #       *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ inputs.terraform_directory }}\`, Workflow: \`${{ github.workflow }}\`*`;
             
-            // 2. Set the output variable
-            const fs = require('fs');
-            fs.writeFileSync('${{ inputs.terraform_directory }}/summary.md', output);
-            core.setOutput('summary', output);
-      - name: Adding markdown
-        run: echo '### Hello world! :rocket:' >> $GITHUB_STEP_SUMMARY
+      #       // 2. Set the output variable
+      #       const fs = require('fs');
+      #       fs.writeFileSync('${{ inputs.terraform_directory }}/summary.md', output);
+      #       core.setOutput('summary', output);
       # - name: Write the step summary
       #   if: always()
       #   run: cat ${{ inputs.terraform_directory }}/summary.md >> $GITHUB_STEP_SUMMARY

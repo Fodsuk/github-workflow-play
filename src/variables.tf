@@ -1,5 +1,9 @@
 variable "location" {
   type        = string
   description = "default location"
-  default     = "UK South"
+}
+
+variable "resource_group_name" {
+  type        = string
+  description = "resource group name"
 }
