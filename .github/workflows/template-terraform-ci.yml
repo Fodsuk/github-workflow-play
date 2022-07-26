@@ -94,3 +94,4 @@ jobs:
       - name: Write the step summary
         if: always()
         run: cat summary.md >> $GITHUB_STEP_SUMMARY
+        working-directory: ${{ inputs.terraform_directory }}
