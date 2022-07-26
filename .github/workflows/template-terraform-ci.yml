@@ -61,10 +61,10 @@ jobs:
         run: |
               terraform init
               terraform apply --auto-approve
-              terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
+              Set-Content -Value "$(terraform output)" -Path "${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars"
+              Get-Content "${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars"
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
-      - run: Write-Host "start $(Get-Content ./fixture.auto.tfvars) end"
       - name: Terraform Plan
         id: plan
         run: terraform plan
