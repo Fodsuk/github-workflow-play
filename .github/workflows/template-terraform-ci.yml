@@ -91,6 +91,8 @@ jobs:
             const fs = require('fs');
             fs.writeFileSync('${{ inputs.terraform_directory }}/summary.md', output);
             core.setOutput('summary', output);
-      - name: Write the step summary
-        if: always()
-        run: cat ${{ inputs.terraform_directory }}/summary.md >> $GITHUB_STEP_SUMMARY
+      - name: Adding markdown
+        run: echo '### Hello world! :rocket:' >> $GITHUB_STEP_SUMMARY
+      # - name: Write the step summary
+      #   if: always()
+      #   run: cat ${{ inputs.terraform_directory }}/summary.md >> $GITHUB_STEP_SUMMARY
