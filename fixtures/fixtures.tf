@@ -1,14 +1,13 @@
 locals {
   location = "uksouth"
-  resource_group_name = "fixtures-sql${random_string.environment.result}"
+  resource_group_name = "fixtures-sql-${random_string.environment.result}"
 }
 resource "random_string" "environment" {
   length  = 8
   special = false
   numeric = false
-  lower   = true
+  upper   = false
 }
-
 
 resource "azurerm_resource_group" "rg" {
   name     = local.resource_group_name
