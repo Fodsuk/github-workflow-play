@@ -58,7 +58,7 @@ jobs:
         continue-on-error: false
         working-directory: ${{ inputs.terraform_directory }}
       - uses: actions/github-script@v6
-        #if: github.event_name == 'pull_request'
+        if: always()
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
@@ -87,9 +87,10 @@ jobs:
             
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
               
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
+            // 2. Set the output variable
+            const fs = require('fs');
+            fs.writeFileSync('${{ env.tf_actions_working_dir }}/summary.md', output);
+            core.setOutput('summary', output);
+      - name: Write the step summary
+        if: always()
+        run: cat summary.md >> $GITHUB_STEP_SUMMARY
