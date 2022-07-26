@@ -67,11 +67,7 @@ jobs:
         working-directory: ${{ inputs.fixture_directory }}
       - name: Terraform Plan
         id: plan
-        run: |
-          echo 'before'
-          cat -Tv fixture.auto.tfvars
-          echo 'after'
-          terraform plan
+        run: terraform plan
         continue-on-error: false
       - name: Terraform Apply
         id: apply
@@ -79,10 +75,10 @@ jobs:
         continue-on-error: false
         # run tests
       - name: Destroy Terraform
+        if: always()
         run: terraform apply -destroy --auto-approve
       - name: Destroy Fixtures
-        #if: ${{ inputs.has_fixtures }}
-        if: always()
+        if: ${{ inputs.has_fixtures }} && always()
         run: terraform apply -destroy --auto-approve
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
