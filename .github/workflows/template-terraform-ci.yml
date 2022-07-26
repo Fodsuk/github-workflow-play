@@ -19,6 +19,9 @@ on:
      has_tests:
        type: boolean
        default: true
+     pester_version:
+       type: string
+       default: "5.3.3"
    secrets:
      CLIENT_ID:
        required: true
@@ -47,16 +50,6 @@ jobs:
       #    creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
       - name: checkout
         uses: actions/checkout@v3
-      - name: Run Tests Demo
-        run: |
-          Get-Module -ListAvailable Pester | Select-Object Name, Version
-          Import-Module Pester
-          $pester_config = [PesterConfiguration]::Default
-          $pester_config.Output.Verbosity = "Detailed"
-          $pester_config.Filter.Tag = "ci"
-
-          Invoke-Pester -Configuration $pester_config
-        working-directory: ${{ inputs.test_directory }}
       - name: Install Terraform ${{ inputs.terraform_version }}
         uses: hashicorp/setup-terraform@v2
         with:
@@ -99,6 +92,7 @@ jobs:
       - name: Run Tests
         if: ${{ inputs.has_tests }} && always()
         run: |
+          Import-Module Pester -RequiredVersion ${{ inputs.pester_version }}
           $pester_config = [PesterConfiguration]::Default
           $pester_config.Output.Verbosity = "Detailed"
           $pester_config.Filter.Tag = "ci"
@@ -110,7 +104,7 @@ jobs:
         if: always()
         run: terraform apply -destroy --auto-approve
       - name: Destroy Fixtures
-        #if: steps.apply_fixtures.outcome in 
+        if: steps.apply_fixtures.outcome in ['success', 'failure', 'cancelled']
         run: terraform apply -destroy --auto-approve
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
