@@ -67,7 +67,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: |
-          cat -Tv .\fixture.auto.tfvars
+          cat -Tv fixture.auto.tfvars
           echo 'plan'
           terraform plan
         continue-on-error: false
