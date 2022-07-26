@@ -9,7 +9,8 @@ jobs:
     with:
       terraform_version: 1.1.0
     secrets:
-     CLIENT_ID: ${{ secrets.ACTION_CLIENT_ID }}
+     CLIENT_ID: ${{ secrets.CLIENT_ID }}
+     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
      SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
      TENANT_ID: ${{ secrets.TENANT_ID }}
 
