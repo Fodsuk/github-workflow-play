@@ -85,11 +85,11 @@ jobs:
             
             </details>
             
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ inputs.terraform_directory }}\`, Workflow: \`${{ github.workflow }}\`*`;
             
             // 2. Set the output variable
             const fs = require('fs');
-            fs.writeFileSync('${{ env.tf_actions_working_dir }}/summary.md', output);
+            fs.writeFileSync('${{ inputs.terraform_directory }}/summary.md', output);
             core.setOutput('summary', output);
       - name: Write the step summary
         if: always()
