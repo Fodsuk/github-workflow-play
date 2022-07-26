@@ -7,7 +7,7 @@ jobs:
   tf:
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-ci.yml@init
     with:
-      terraform_version: 1.1.0
+      terraform_version: 1.1.7
     secrets:
      CLIENT_ID: ${{ secrets.CLIENT_ID }}
      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
