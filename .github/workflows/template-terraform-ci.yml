@@ -74,6 +74,7 @@ jobs:
         run: terraform validate
         continue-on-error: false
       - name: Create Fixtures
+        id: apply_fixtures
         if: ${{ inputs.has_fixtures }}
         run: |
               terraform init
@@ -109,7 +110,7 @@ jobs:
         if: always()
         run: terraform apply -destroy --auto-approve
       - name: Destroy Fixtures
-        if: ${{ inputs.has_fixtures }} && always()
+        #if: steps.apply_fixtures.outcome in 
         run: terraform apply -destroy --auto-approve
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
