@@ -64,7 +64,7 @@ jobs:
               terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
-      - run: Get-Content ./fixture.auto.tfvars
+      - run: Write-Host "start $(Get-Content ./fixture.auto.tfvars) end"
       - name: Terraform Plan
         id: plan
         run: terraform plan
