@@ -1,5 +1,5 @@
 resource "azurerm_mssql_server" "schroders" {
-  name                         = "schroderssql"
+  name                         = "plt-${var.environment}-${var.location}-sql"
   resource_group_name          = var.resource_group_name
   location                     = var.location
   version                      = "12.0"
