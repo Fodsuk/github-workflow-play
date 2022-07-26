@@ -1,36 +1,36 @@
 on:
- workflow_call:
-   inputs:
-     terraform_version:
-       required: true
-       type: string
-     terraform_directory:
-       type: string
-       default: src
-     fixture_directory:
-       type: string
-       default: fixtures
-     has_fixtures:
-       type: boolean
-       default: true
-     test_directory:
-       type: string
-       default: spec
-     has_tests:
-       type: boolean
-       default: true
-     pester_version:
-       type: string
-       default: "5.3.3"
-   secrets:
-     CLIENT_ID:
-       required: true
-     CLIENT_SECRET:
-       required: true
-     SUBSCRIPTION_ID:
-       required: true
-     TENANT_ID:
-       required: true
+  workflow_call:
+    inputs:
+      terraform_version:
+        required: true
+        type: string
+      terraform_directory:
+        type: string
+        default: src
+      fixture_directory:
+        type: string
+        default: fixtures
+      has_fixtures:
+        type: boolean
+        default: true
+      test_directory:
+        type: string
+        default: spec
+      has_tests:
+        type: boolean
+        default: true
+      pester_version:
+        type: string
+        default: "5.3.3"
+    secrets:
+      CLIENT_ID:
+        required: true
+      CLIENT_SECRET:
+        required: true
+      SUBSCRIPTION_ID:
+        required: true
+      TENANT_ID:
+        required: true
 jobs:
   terraform-build-and-test:
     runs-on: ubuntu-latest
@@ -70,9 +70,9 @@ jobs:
         id: apply_fixtures
         if: ${{ inputs.has_fixtures }}
         run: |
-              terraform init
-              terraform apply --auto-approve
-              terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
+          terraform init
+          terraform apply --auto-approve
+          terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
       - name: Terraform Plan
@@ -83,7 +83,7 @@ jobs:
         id: apply
         run: |
           terraform apply --auto-approve
-          
+
           # generate variables_and_outputs.json (can be used by pester tests)
           terraform plan -json -out="plan.raw"
           terraform show -json plan.raw > variables_and_outputs.json
@@ -101,10 +101,10 @@ jobs:
         working-directory: ${{ inputs.test_directory }}
         # destroy all resources
       - name: Destroy Terraform
-        if: always()
+        if: contains(fromJson('["success", "failure", "cancelled"]'), steps.apply.outcome)
         run: terraform apply -destroy --auto-approve
       - name: Destroy Fixtures
-        if: steps.apply_fixtures.outcome in ['success', 'failure', 'cancelled']
+        if: contains(fromJson('["success", "failure", "cancelled"]'), steps.apply_fixtures.outcome)
         run: terraform apply -destroy --auto-approve
         continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
@@ -128,17 +128,17 @@ jobs:
       #       \`\`\`
       #       </details>
       #       #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            
+
       #       <details><summary>Show Plan</summary>
-            
+
       #       \`\`\`\n
       #       ${process.env.PLAN}
       #       \`\`\`
-            
+
       #       </details>
-            
+
       #       *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ inputs.terraform_directory }}\`, Workflow: \`${{ github.workflow }}\`*`;
-            
+
       #       // 2. Set the output variable
       #       const fs = require('fs');
       #       fs.writeFileSync('${{ inputs.terraform_directory }}/summary.md', output);
