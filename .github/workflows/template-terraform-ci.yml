@@ -28,10 +28,10 @@ jobs:
       ARM_SUBSCRIPTION_ID: "${{ secrets.SUBSCRIPTION_ID }}"
       ARM_TENANT_ID: "${{ secrets.TENANT_ID }}"
     steps:
-      - name: 'Az login'
-        uses: azure/login@v1
-        with:
-          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+      #- name: 'Az login'
+      # uses: azure/login@v1
+      #  with:
+      #    creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
       - name: checkout
         uses: actions/checkout@v3
       - name: Install Terraform ${{ inputs.terraform_version }}
