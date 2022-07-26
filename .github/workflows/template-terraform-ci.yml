@@ -22,6 +22,11 @@ jobs:
     defaults:
       run:
         shell: pwsh
+    env:
+      ARM_CLIENT_ID: "${{ secrets.CLIENT_ID }}"
+      ARM_CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
+      ARM_SUBSCRIPTION_ID: "${{ secrets.SUBSCRIPTION_ID }}"
+      ARM_TENANT_ID: "${{ secrets.TENANT_ID }}"
     steps:
       - name: 'Az login'
         uses: azure/login@v1
