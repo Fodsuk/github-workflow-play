@@ -20,25 +20,6 @@ jobs:
     steps:
       - name: "plan terraform"
         run: echo 'plan terraform'
-  # plan infradev dev1/uat1/prd1 stages
-  plan_infradev_dev1:
-    name: plan infradev dev1 terraform
-    runs-on: ubuntu-latest
-    steps:
-      - name: "plan terraform"
-        run: echo 'plan terraform'
-  plan_infradev_uat1:
-    name: plan infradev uat1 terraform
-    runs-on: ubuntu-latest
-    steps:
-      - name: "plan terraform"
-        run: echo 'plan terraform'
-  plan_infradev_prd1:
-    name: plan infradev prd1 terraform
-    runs-on: ubuntu-latest
-    steps:
-      - name: "plan terraform"
-        run: echo 'plan terraform'
   # deploy infradev dev/uat/prd
   apply_infradev_dev:
     name: apply infradev dev terraform
@@ -61,31 +42,6 @@ jobs:
     environment: infradev_prod
     runs-on: ubuntu-latest
     needs: [apply_infradev_uat, plan_infradev_prd]
-    steps:
-      - name: "apply terraform"
-        run: echo 'apply terraform'
-  # deploy infradev dev1/uat1/prd1
-  apply_infradev_dev1:
-    name: apply infradev dev1 terraform
-    environment: infradev_dev1
-    runs-on: ubuntu-latest
-    needs: [plan_infradev_dev1]
-    steps:
-      - name: "apply terraform"
-        run: echo 'apply terraform'
-  apply_infradev_uat1:
-    name: apply infradev uat1 terraform
-    environment: infradev_uat1
-    runs-on: ubuntu-latest
-    needs: [apply_infradev_dev1, plan_infradev_uat1]
-    steps:
-      - name: "apply terraform"
-        run: echo 'apply terraform'
-  apply_infradev_prd1:
-    name: apply infradev prd1 terraform
-    environment: infradev_prod1
-    runs-on: ubuntu-latest
-    needs: [apply_infradev_uat1, plan_infradev_prd1]
     steps:
       - name: "apply terraform"
         run: echo 'apply terraform'
