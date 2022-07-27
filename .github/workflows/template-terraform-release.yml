@@ -24,6 +24,7 @@ jobs:
   # deploy stages
   apply_dev:
     name: apply development terraform
+    environment: infradev_dev
     runs-on: ubuntu-latest
     needs: [plan_dev]
     steps:
@@ -31,6 +32,7 @@ jobs:
         run: echo 'apply terraform'
   apply_uat:
     name: apply UAT terraform
+    environment: infradev_uat
     runs-on: ubuntu-latest
     needs: [apply_dev, plan_uat]
     steps:
@@ -38,6 +40,7 @@ jobs:
         run: echo 'apply terraform'
   apply_prod:
     name: apply production terraform
+    environment: infradev_prod
     runs-on: ubuntu-latest
     needs: [apply_uat, plan_prod]
     steps:
