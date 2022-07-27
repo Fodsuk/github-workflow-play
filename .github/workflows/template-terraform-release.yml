@@ -1,0 +1,45 @@
+on:
+  push:
+
+jobs:
+  # plan stages
+  plan_dev:
+    name: plan development terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: "plan terraform"
+        run: echo 'plan terraform'
+  plan_uat:
+    name: plan UAT terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: "plan terraform"
+        run: echo 'plan terraform'
+  plan_prod:
+    name: plan production terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: "plan terraform"
+        run: echo 'plan terraform'
+  # deploy stages
+  apply_dev:
+    name: apply development terraform
+    runs-on: ubuntu-latest
+    needs: [plan_dev]
+    steps:
+      - name: "apply terraform"
+        run: echo 'apply terraform'
+  apply_uat:
+    name: apply UAT terraform
+    runs-on: ubuntu-latest
+    needs: [apply_dev, plan_uat]
+    steps:
+      - name: "apply terraform"
+        run: echo 'apply terraform'
+  apply_prod:
+    name: apply production terraform
+    runs-on: ubuntu-latest
+    needs: [apply_uat, plan_prod]
+    steps:
+      - name: "apply terraform"
+        run: echo 'apply terraform'
