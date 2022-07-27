@@ -62,7 +62,7 @@ jobs:
     name: apply infradev prd terraform
     environment: infradev_prod
     runs-on: ubuntu-latest
-    needs: [apply_infradev_uat, plan_infradev_prod]
+    needs: [apply_infradev_uat, plan_infradev_prd]
     steps:
       - name: "apply terraform"
         run: echo 'apply terraform'
