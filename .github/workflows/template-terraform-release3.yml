@@ -1,7 +1,7 @@
 on: [workflow_dispatch, push]
 
 jobs:
-  # plan infradev dev stages
+  # plan infradev dev stage
   plan_infradev_dev:
     name: plan infradev dev terraform
     runs-on: ubuntu-latest
