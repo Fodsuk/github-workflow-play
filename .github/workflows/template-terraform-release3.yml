@@ -1,4 +1,5 @@
 on:
+  push:
   workflow_dispatch:
 
 jobs:
@@ -57,7 +58,7 @@ jobs:
     steps:
       - name: "apply terraform"
         run: echo 'apply terraform'
-  apply_infradev_prod:
+  apply_infradev_prd:
     name: apply infradev prd terraform
     environment: infradev_prod
     runs-on: ubuntu-latest
