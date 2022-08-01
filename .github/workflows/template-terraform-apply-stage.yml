@@ -1,0 +1,10 @@
+on: [workflow_call]
+
+jobs:
+  # apply stages
+  apply_stage:
+    name: apply dev terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: "apply terraform dev"
+        run: echo 'apply terraform'

@@ -4,5 +4,9 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  tf:
+  tf_plan:
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-plan-stage.yml@init
+  tf_apply:
+    needs: [tf_plan]
+    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-apply-stage.yml@init
+    

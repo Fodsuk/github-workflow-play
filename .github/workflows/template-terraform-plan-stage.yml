@@ -6,42 +6,5 @@ jobs:
     name: plan infradev dev terraform
     runs-on: ubuntu-latest
     steps:
-      - name: "plan terraform"
+      - name: "plan terraform dev"
         run: echo 'plan terraform'
-  plan_uat:
-    name: plan infradev uat terraform
-    runs-on: ubuntu-latest
-    steps:
-      - name: "plan terraform"
-        run: echo 'plan terraform'
-  plan_prod:
-    name: plan infradev prod terraform
-    runs-on: ubuntu-latest
-    steps:
-      - name: "plan terraform"
-        run: echo 'plan terraform'
-  # deploy stages
-  apply_dev:
-    name: apply infradev dev terraform
-    environment: infradev_dev
-    runs-on: ubuntu-latest
-    needs: [plan_dev]
-    steps:
-      - name: "apply terraform"
-        run: echo 'apply terraform'
-  apply_uat:
-    name: apply infradev uat terraform
-    environment: infradev_uat
-    runs-on: ubuntu-latest
-    needs: [apply_dev, plan_uat]
-    steps:
-      - name: "apply terraform"
-        run: echo 'apply terraform'
-  apply_prod:
-    name: apply infradev prod terraform
-    environment: infradev_prod
-    runs-on: ubuntu-latest
-    needs: [apply_uat, plan_prod]
-    steps:
-      - name: "apply terraform"
-        run: echo 'apply terraform'
