@@ -1,5 +1,5 @@
 name: terraform CI
-on: [push]
+on: [push, workflow_dispatch]
 permissions:
   id-token: write
   contents: read
