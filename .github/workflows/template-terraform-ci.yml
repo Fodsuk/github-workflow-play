@@ -1,27 +1,36 @@
 on:
   workflow_call:
     inputs:
+      # terraform
       terraform_version:
         required: true
         type: string
       terraform_directory:
         type: string
         default: src
-      fixture_directory:
-        type: string
-        default: fixtures
+        required: true
+      # fixtures
       has_fixtures:
         type: boolean
         default: true
-      test_directory:
+        required: true
+      fixture_directory:
         type: string
-        default: spec
+        default: fixtures
+        required: true
+      # testing
       has_tests:
         type: boolean
         default: true
+        required: true
+      test_directory:
+        type: string
+        default: spec
+        required: false
       pester_version:
         type: string
-        default: "5.3.3"
+        default: 5.3.3
+        required: false
     secrets:
       CLIENT_ID:
         required: true

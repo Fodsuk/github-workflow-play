@@ -1,0 +1,8 @@
+name: terraform Release
+on: [push]
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  tf:
+    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-plan-stage.yml@init
