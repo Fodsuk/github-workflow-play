@@ -48,9 +48,13 @@ jobs:
           "@
           Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
 
-          Get-ChildItem
+          Get-ChildItem -Recurse
 
-          terraform init -backend-config=${{github.workspace}}\${{ inputs.terraform_directory }}\config.azurerm.tfbackend
+          $backend_path = "${{github.workspace}}\${{ inputs.terraform_directory }}\config.azurerm.tfbackend"
+
+          Write-Host $backend_path
+
+          terraform init -backend-config=$backend_path
         env:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       # set up state file connectivity
