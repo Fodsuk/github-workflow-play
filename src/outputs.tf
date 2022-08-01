@@ -1,7 +1,14 @@
-output "sql_server_resource_group_name" {
-  value = azurerm_mssql_server.schroders.resource_group_name
+output "policies" {
+  value = [for policy in azurerm_policy_definition.schroders : {
+    name         = policy.name
+    display_name = policy.display_name
+  }]
 }
 
-output "sql_server_minimum_tls_version" {
-  value = azurerm_mssql_server.schroders.minimum_tls_version
+output "policie_sets" {
+  value = [for policy in azurerm_policy_set_definition.schroders : {
+    name         = policy.name
+    display_name = policy.display_name
+    mode         = policy.mode
+  }]
 }

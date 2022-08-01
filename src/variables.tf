@@ -1,14 +1,27 @@
-variable "location" {
-  type        = string
-  description = "default location"
+variable "policy_host" {
+  type = object({
+    management_group_id = string
+  })
+  description = "where should the policy resources get created"
+
+  default = null
 }
 
-variable "environment" {
-  type        = string
-  description = "environment"
+variable "policy_sets" {
+  type = map(object({
+    display_name = string
+    description  = string
+    metadata     = map(string)
+  }))
+
+  default = {}
 }
 
-variable "resource_group_name" {
-  type        = string
-  description = "resource group name"
+variable "policies" {
+  type = map(object({
+    policy_file = string
+    set_name    = string
+  }))
+
+  default = {}
 }
