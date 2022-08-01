@@ -42,3 +42,26 @@ az ad sp create-for-rbac --display-name "my-sp-name" --years 2 --sdk-auth
 - `User Access Administrator` (may only need Resource Policy Contributor)
 - `Resource Policy Contributor`
  az role assignment create --role ROLE_NAME --scope /providers/Microsoft.Management/managementGroups/my-mg-grp --assignee-object-id SP_OBJECT_ID
+
+
+# to set up storage account backend
+need to add a .tf file (e.g. backend_pipeline.tf)
+
+```
+terraform {
+  backend "azurerm" {}
+}
+```
+
+also, need to add a .tfbackend file (config.azurerm.tfbackend)
+```
+resource_group_name  = "terraform-backend-state"
+storage_account_name = "my_sa_name"
+container_name       = "tfstate"
+key                  = "local.terraform.tfstate"
+```
+
+finally, set the ARM_ACCES_KEY environment variable.
+```
+$ENV:ARM_ACCESS_KEY = "MY STORAGE ACCOUNT KEY"
+```

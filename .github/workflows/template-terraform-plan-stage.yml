@@ -1,10 +1,55 @@
-on: [workflow_call]
-
+on:
+  workflow_call:
+    inputs:
+      # terraform
+      terraform_version:
+        type: string
+      terraform_directory:
+        type: string
+        default: src
+    secrets:
+      TFSTATE_RESOURCE_GROUP_NAME:
+        required: true
+      TFSTATE_STORAGE_ACCOUNT_NAME:
+        required: true
+      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY:
+        required: true
 jobs:
   # plan stages
   plan_dev:
-    name: plan infradev dev terraform
+    name: plan dev terraform
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: ${{ inputs.terraform_directory }}
     steps:
-      - name: "plan terraform dev"
-        run: echo 'plan terraform'
+      - name: "configure azurerm backend"
+        run: |
+          $backend = @"
+            terraform {
+                backend "azurerm" {}
+            }
+          "@
+          Set-Content -Value $backend -Path .\pipeline_azurerm_backend.tf
+
+          $backend_variables = @"
+          resource_group_name  = "${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}"
+          storage_account_name = "${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}"
+          container_name       = "tfstate"
+          key                  = "${{ github.event.repository.name }}.tfstate"
+          "@
+          Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
+
+          terraform init -backend-config=${{ inputs.terraform_directory }}\config.azurerm.tfbackend
+        env:
+          ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
+      # set up state file connectivity
+      # install terraform, init
+      # install hiera
+      # pass hiera facts from environment
+      # create variables.yaml from environment variables
+      # iterate each terraform variable and look up in hiera
+      # create ci.auto.tfvars
+      # terraform plan -out=plan
+      # put plan in artifact

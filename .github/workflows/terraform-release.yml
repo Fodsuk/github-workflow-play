@@ -4,6 +4,15 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  all:
-    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-release.yml@init
+  tf_plan:
+    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-plan-stage.yml@init
+    with:
+      terraform_version: 1.2.6
+    secrets:
+     TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}
+     TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}
+     TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+  tf_apply:
+    needs: [tf_plan]
+    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-apply-stage.yml@init
     
