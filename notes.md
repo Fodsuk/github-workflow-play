@@ -66,4 +66,22 @@ $ENV:ARM_ACCESS_KEY = "MY STORAGE ACCOUNT KEY"
 ```
 
 ### hiera
-- create f
+download hiera.exe
+```yaml
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: download and upload hiera
+        run: |
+          git clone https://github.com/lyraproj/hiera
+          cd ./hiera/lookup
+          go build          
+          ls
+          azcopy login --service-principal --application-id ${{ secrets.CLIENT_ID }} --tenant-id=${{ secrets.TENANT_ID }}
+          echo after_login
+          azcopy login status
+          echo after_login_status
+          azcopy copy 'lookup.exe' 'https://${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}.blob.core.windows.net/hiera/hiera.exe'
+        env:
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+```

@@ -1,0 +1,8 @@
+policy_sets:
+  storage_ple:
+    display_name: Azure Storage Account - Must have Private Link Configured
+    description: Azure Storage Account - Must have Private Link Configured
+    metadata:
+      category: storage
+      version: 1.0.0
+
