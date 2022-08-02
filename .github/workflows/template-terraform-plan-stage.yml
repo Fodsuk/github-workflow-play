@@ -32,10 +32,12 @@ jobs:
         shell: pwsh
         working-directory: ${{ inputs.terraform_directory }}
     steps:
+      - name: checkout
+        uses: actions/checkout@v3
       - name: download and upload hiera
         run: |
           git clone https://github.com/lyraproj/hiera
-          cd hiera/lookup
+          cd ./hiera/lookup
           go build
           ls
 
@@ -44,8 +46,6 @@ jobs:
           azcopy copy 'lookup.exe' 'https://${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}.blob.core.windows.net/hiera/hiera.exe'
         env:
           AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-      - name: checkout
-        uses: actions/checkout@v3
       - name: Install Terraform ${{ inputs.terraform_version }}
         uses: hashicorp/setup-terraform@v2
         with:
