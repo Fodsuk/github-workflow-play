@@ -78,7 +78,7 @@ jobs:
         working-directory: ${{ inputs.hiera_directory }}
       - name: Read Hiera & Generate .tfvars
         run: |
-          terraform plan -json -out=.\plan.raw
+          terraform plan -json -out="plan.raw"
           ls
           terraform show -json plan.raw > variables.json
           $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
