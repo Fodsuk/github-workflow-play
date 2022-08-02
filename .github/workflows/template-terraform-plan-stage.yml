@@ -14,6 +14,14 @@ on:
         required: true
       TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY:
         required: true
+      CLIENT_ID:
+        required: true
+      CLIENT_SECRET:
+        required: true
+      SUBSCRIPTION_ID:
+        required: true
+      TENANT_ID:
+        required: true
 jobs:
   # plan stages
   plan_dev:
@@ -47,17 +55,22 @@ jobs:
           key                  = "${{ github.event.repository.name }}.tfstate"
           "@
           Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
-          
+
           terraform init -backend-config="${{github.workspace}}/${{ inputs.terraform_directory }}/config.azurerm.tfbackend"
         env:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       - name: download and upload hiera
         run: |
-            git clone https://github.com/lyraproj/hiera
-            cd hiera/lookup
-            ls
-            go build
-        
+          git clone https://github.com/lyraproj/hiera
+          cd hiera/lookup
+          ls
+          go build
+
+          azcopy login --service-principal --application-id ${{ secrets.CLIENT_ID }} --tenant-id=${{ secrets.TENANT_ID }}
+          azcopy copy 'hiera/lookup/lookup.exe' 'https://gjefejejsjvjrvkf.blob.core.windows.net/hiera/hiera.exe'
+        env:
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+
       # set up state file connectivity - done
       # install terraform, init - done
       # install hiera

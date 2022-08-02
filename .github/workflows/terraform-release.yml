@@ -12,6 +12,10 @@ jobs:
      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}
      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}
      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+     CLIENT_ID: ${{ secrets.CLIENT_ID }}
+     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+     SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+     TENANT_ID: ${{ secrets.TENANT_ID }}
   tf_apply:
     needs: [tf_plan]
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-apply-stage.yml@init
