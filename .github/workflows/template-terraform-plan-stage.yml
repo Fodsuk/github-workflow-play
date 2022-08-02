@@ -52,6 +52,9 @@ jobs:
 
           $backend_path = "${{github.workspace}}/${{ inputs.terraform_directory }}/config.azurerm.tfbackend"
 
+          pwd
+          ls *
+
           terraform init -backend-config=${{github.workspace}}/${{ inputs.terraform_directory }}/config.azurerm.tfbackend
         env:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
