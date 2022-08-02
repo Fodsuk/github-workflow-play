@@ -90,7 +90,7 @@ jobs:
 
           foreach ($variable in $terraform_data.variables.GetEnumerator()) {
               $variable_name = $variable.Key
-              $variable_value_json = lookup $variable_name --render-as json
+              $variable_value_json = ./lookup $variable_name --render-as json
 
               if ($null -ne $variable_value_json) {
                   $tf_vars[$variable_name] = ConvertFrom-Json $variable_value_json -Depth 99
@@ -100,7 +100,7 @@ jobs:
 
           $tf_vars_json = (ConvertTo-Json $tf_vars -Depth 99)
 
-          Set-Content -Path .\hiera.auto.tfvars.json -Value $tf_vars_json
+          Set-Content -Path ./hiera.auto.tfvars.json -Value $tf_vars_json
 
           terraform plan
 
