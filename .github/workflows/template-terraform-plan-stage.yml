@@ -69,6 +69,7 @@ jobs:
           go build
           Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.hiera_directory }} 
           Pop-Location
+          ls
           lookup policy_sets
 
         working-directory: ${{ inputs.hiera_directory }}
