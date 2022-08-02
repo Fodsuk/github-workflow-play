@@ -68,7 +68,7 @@ jobs:
           ls -R
           Push-Location hiera_code/lookup -Verbose
           ls -R
-          go build -o ${{github.hiera_directory}}/
+          go build
           Pop-Location -Verbose
           ls -R
           lookup policy_sets
