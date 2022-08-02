@@ -40,6 +40,10 @@ jobs:
       ARM_SUBSCRIPTION_ID: "${{ secrets.SUBSCRIPTION_ID }}"
       ARM_TENANT_ID: "${{ secrets.TENANT_ID }}"
     steps:
+      - name: view the secrets context
+        run: echo "$SECRETS_CONTEXT"
+        env:
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
       - name: checkout
         uses: actions/checkout@v3
       - name: Install Terraform ${{ inputs.terraform_version }}
@@ -47,7 +51,7 @@ jobs:
         with:
           terraform_version: ${{ inputs.terraform_version }}
           terraform_wrapper: false
-      - name: configure azurerm backend
+      - name: Configure Azurerm Backend
         run: |
           $backend = @"
             terraform {
@@ -76,7 +80,7 @@ jobs:
           Pop-Location
           #./lookup policy_sets
         working-directory: ${{ inputs.hiera_directory }}
-      - name: Read Hiera & Generate .tfvars
+      - name: Generate .tfvars from Hiera
         run: |
           terraform plan -json -out="plan.raw"
           ls
@@ -101,15 +105,16 @@ jobs:
           $tf_vars_json = (ConvertTo-Json $tf_vars -Depth 99)
 
           Set-Content -Path ./hiera.auto.tfvars.json -Value $tf_vars_json
-
+      - name: Terraform Plan
+        run: |
           terraform plan
 
-      # set up state file connectivity - done
-      # install terraform, init - done
-      # install hiera
+      # set up state file connectivity - DONE
+      # install terraform, init - DONE
+      # install hiera - DONE
       # pass hiera facts from environment
       # create variables.yaml from environment variables
-      # iterate each terraform variable and look up in hiera
-      # create ci.auto.tfvars
-      # terraform plan -out=plan
+      # iterate each terraform variable and look up in hiera -DONE
+      # create hiera.auto.tfvars.json - DONE
+      # terraform plan -out=plan - DONE
       # put plan in artifact
