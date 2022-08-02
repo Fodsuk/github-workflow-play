@@ -48,11 +48,9 @@ jobs:
           "@
           Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
 
-          ls
+          Get-Content .\config.azurerm.tfbackend
 
           $backend_path = "${{github.workspace}}/${{ inputs.terraform_directory }}/config.azurerm.tfbackend"
-
-          Write-Host $backend_path
 
           terraform init -backend-config=${{github.workspace}}/${{ inputs.terraform_directory }}/config.azurerm.tfbackend
         env:
