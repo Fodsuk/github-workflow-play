@@ -1,6 +1,5 @@
 ## management groups and service principals
 
-
 - Roddas Management Group
     - Roddas Cloud Platform Group
         - Roddas Platform Dev
