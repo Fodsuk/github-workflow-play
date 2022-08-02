@@ -65,12 +65,12 @@ jobs:
       - name: Get Hiera
         run: |
           git clone https://github.com/lyraproj/hiera hiera_code
-          ls -R
-          Push-Location hiera_code/lookup -Verbose
-          ls -R
+          ls
+          Push-Location hiera_code/lookup -Verbose          
           go build
+          ls
           Pop-Location -Verbose
-          ls -R
+          ls
           lookup policy_sets
 
         working-directory: ${{ inputs.hiera_directory }}
