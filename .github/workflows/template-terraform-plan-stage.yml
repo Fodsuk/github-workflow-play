@@ -62,15 +62,13 @@ jobs:
           terraform init -backend-config="${{github.workspace}}/${{ inputs.terraform_directory }}/config.azurerm.tfbackend"
         env:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
-      - name: Get Hiera
+      - name: Download & Build Hiera
         run: |
           git clone https://github.com/lyraproj/hiera hiera_code
-          ls
           Push-Location hiera_code/lookup -Verbose          
           go build
-          ls
-          Pop-Location -Verbose
-          ls
+          Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.hiera_directory }} 
+          Pop-Location
           lookup policy_sets
 
         working-directory: ${{ inputs.hiera_directory }}
