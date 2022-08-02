@@ -1,8 +1,12 @@
 policy_sets:
-  storage_ple:
-    display_name: Azure Storage Account - Must have Private Link Configured
-    description: Azure Storage Account - Must have Private Link Configured
+  azure_sql:
+    display_name: Azure SQL - Must have Private Link Configured
+    description: Azure SQL - Must have Private Link Configured
     metadata:
-      category: storage
+      category: sql
       version: 1.0.0
 
+policies:
+  sql_has_private_link:
+    policy_file: sql_server/has_private_link.json
+    set_name: azure_sql

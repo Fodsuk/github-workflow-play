@@ -65,14 +65,39 @@ jobs:
       - name: Download & Build Hiera
         run: |
           git clone https://github.com/lyraproj/hiera hiera_code
-          Push-Location hiera_code/lookup -Verbose          
+          Push-Location hiera_code/lookup
           go build
           Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.hiera_directory }} 
           Pop-Location
-          ls
-          ./lookup policy_sets
-
+          #./lookup policy_sets
         working-directory: ${{ inputs.hiera_directory }}
+      - name: Read Hiera & Generate .tfvars
+        run: |
+          terraform plan -json -out="plan.raw"
+          terraform show -json plan.raw > variables.json
+          $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
+
+          Copy-Item variables.json -Destination ${{github.workspace}}/${{ inputs.hiera_directory }} 
+
+          Push-Location ${{github.workspace}}/${{ inputs.hiera_directory }}
+          $tf_vars = @{}
+
+          foreach ($variable in $terraform_data.variables.GetEnumerator()) {
+              $variable_name = $variable.Key
+              $variable_value_json = lookup $variable_name --render-as json
+
+              if ($null -ne $variable_value_json) {
+                  $tf_vars[$variable_name] = ConvertFrom-Json $variable_value_json -Depth 99
+              }
+          }
+          Pop-Location
+
+          $tf_vars_json = (ConvertTo-Json $tf_vars -Depth 99)
+
+          Set-Content -Path .\hiera.auto.tfvars.json -Value $tf_vars_json
+
+          terraform plan
+
       # set up state file connectivity - done
       # install terraform, init - done
       # install hiera
