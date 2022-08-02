@@ -38,8 +38,7 @@ jobs:
         run: |
           git clone https://github.com/lyraproj/hiera
           cd ./hiera/lookup
-          go build
-          ls
+          go build          
 
           azcopy login --service-principal --application-id ${{ secrets.CLIENT_ID }} --tenant-id=${{ secrets.TENANT_ID }}
           azcopy login status
