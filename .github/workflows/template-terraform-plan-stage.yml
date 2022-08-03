@@ -8,6 +8,9 @@ on:
         type: string
         default: src
       # hiera
+      has_hiera:
+        type: boolean
+        default: false
       hiera_directory:
         type: string
         default: hiera
@@ -68,6 +71,7 @@ jobs:
         env:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       - name: Download & Build Hiera
+        if: ${{ inputs.has_hiera }}
         run: |
           git clone https://github.com/lyraproj/hiera hiera_code
           Push-Location hiera_code/lookup
@@ -76,6 +80,7 @@ jobs:
           Pop-Location
         working-directory: ${{ inputs.hiera_directory }}
       - name: Generate hiera.auto.tfvars.json from Hiera
+        if: ${{ inputs.has_hiera }}
         run: |
           terraform plan -json -out="plan.raw"
           terraform show -json plan.raw > ${{github.workspace}}/${{ inputs.hiera_directory }}/variables.json
