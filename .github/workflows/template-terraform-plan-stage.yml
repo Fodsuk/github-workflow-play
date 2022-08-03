@@ -35,6 +35,7 @@ on:
 jobs:
   plan:
     name: plan terraform
+    environment: ${{ inputs.ENVIRONMENT }}
     runs-on: ubuntu-latest
     defaults:
       run:
