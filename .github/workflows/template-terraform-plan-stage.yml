@@ -10,7 +10,7 @@ on:
       # hiera
       has_hiera:
         type: boolean
-        default: false
+        default: true
       hiera_directory:
         type: string
         default: hiera
@@ -58,6 +58,8 @@ jobs:
             }
           "@
           Set-Content -Value $backend -Path .\pipeline_azurerm_backend.tf
+
+          throw "BANG!"
 
           $backend_variables = @"
           resource_group_name  = "${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}"
