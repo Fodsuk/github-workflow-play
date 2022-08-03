@@ -80,7 +80,6 @@ jobs:
         run: terraform plan
       - name: Terraform Apply
         id: apply
-        continue-on-error: true
         run: |
           terraform apply --auto-approve
 
@@ -89,7 +88,6 @@ jobs:
           terraform show -json plan.raw > variables_and_outputs.json
         # run tests
       - name: Run Tests
-        continue-on-error: true
         if: ${{ inputs.has_tests }} && always()
         run: |
           Import-Module Pester -RequiredVersion ${{ inputs.pester_version }}
@@ -97,18 +95,14 @@ jobs:
           $pester_config.Output.Verbosity = "Detailed"
           $pester_config.Filter.Tag = "ci"
 
-          throw "tests failed"
-
           Invoke-Pester -Configuration $pester_config
         working-directory: ${{ inputs.test_directory }}
         # destroy all resources
       - name: Destroy Terraform
         run: terraform apply -destroy --auto-approve
-        continue-on-error: true
       - name: Destroy Fixtures
         if: ${{ inputs.has_fixtures }}
         run: terraform apply -destroy --auto-approve
-        continue-on-error: true
         working-directory: ${{ inputs.fixture_directory }}
 
       # - name: Create the plan summary
