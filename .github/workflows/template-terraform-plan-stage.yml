@@ -78,33 +78,27 @@ jobs:
           go build
           Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.hiera_directory }} 
           Pop-Location
-          #./lookup policy_sets
         working-directory: ${{ inputs.hiera_directory }}
       - name: Generate .tfvars from Hiera
         run: |
           terraform plan -json -out="plan.raw"
-          ls
-          terraform show -json plan.raw > variables.json
-          $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
-
-          Copy-Item variables.json -Destination ${{github.workspace}}/${{ inputs.hiera_directory }} 
+          terraform show -json plan.raw > ${{github.workspace}}/${{ inputs.hiera_directory }}/variables.json
 
           Push-Location ${{github.workspace}}/${{ inputs.hiera_directory }}
+
+          $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
+
           $tf_vars = @{}
 
-          foreach ($variable in $terraform_data.variables.GetEnumerator()) {
-              $variable_name = $variable.Key
-              $variable_value_json = ./lookup $variable_name --render-as json
+          foreach ($tf_variable in $terraform_data.variables.GetEnumerator()) {
+              $variable_value_json = ./lookup $tf_variable.Key --render-as json
 
               if ($null -ne $variable_value_json) {
-                  $tf_vars[$variable_name] = ConvertFrom-Json $variable_value_json -Depth 99
+                  $tf_vars[$tf_variable.Key] = ConvertFrom-Json $variable_value_json -Depth 99
               }
           }
-          Pop-Location
-
-          $tf_vars_json = (ConvertTo-Json $tf_vars -Depth 99)
-
-          Set-Content -Path ./hiera.auto.tfvars.json -Value $tf_vars_json
+          $hiera_tfvars_json = (ConvertTo-Json $tf_vars -Depth 99)
+          Set-Content -Path ${{github.workspace}}/${{ inputs.terraform_directory }}/hiera.auto.tfvars.json -Value $hiera_tfvars_json
       - name: Terraform Plan
         run: |
           terraform plan
