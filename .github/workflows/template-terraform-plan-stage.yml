@@ -7,6 +7,7 @@ on:
       terraform_directory:
         type: string
         default: src
+      # hiera
       hiera_directory:
         type: string
         default: hiera
@@ -26,8 +27,7 @@ on:
       TENANT_ID:
         required: true
 jobs:
-  # plan stages
-  plan_dev:
+  plan:
     name: plan dev terraform
     runs-on: ubuntu-latest
     defaults:
@@ -42,10 +42,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: view the secrets context
-        run: echo "$SECRETS_CONTEXT"
-        env:
-          SECRETS_CONTEXT: ${{ toJson(secrets) }}
       - name: Install Terraform ${{ inputs.terraform_version }}
         uses: hashicorp/setup-terraform@v2
         with:
@@ -79,7 +75,7 @@ jobs:
           Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.hiera_directory }} 
           Pop-Location
         working-directory: ${{ inputs.hiera_directory }}
-      - name: Generate .tfvars from Hiera
+      - name: Generate hiera.auto.tfvars.json from Hiera
         run: |
           terraform plan -json -out="plan.raw"
           terraform show -json plan.raw > ${{github.workspace}}/${{ inputs.hiera_directory }}/variables.json
