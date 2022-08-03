@@ -100,11 +100,10 @@ jobs:
         working-directory: ${{ inputs.test_directory }}
         # destroy all resources
       - name: Destroy Terraform
-        if: contains(fromJson('["success", "failure", "cancelled"]'), steps.apply.outcome)
         run: terraform apply -destroy --auto-approve
         continue-on-error: true
       - name: Destroy Fixtures
-        if: contains(fromJson('["success", "failure", "cancelled"]'), steps.apply_fixtures.outcome)
+        if: ${{ inputs.has_fixtures }}
         run: terraform apply -destroy --auto-approve
         continue-on-error: true
         working-directory: ${{ inputs.fixture_directory }}
