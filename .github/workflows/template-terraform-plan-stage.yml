@@ -97,13 +97,14 @@ jobs:
 
           if ("${{ secrets.HIERA_FACTS }}" -ne "") {
             Set-Content -Path ./facts.yaml -Value "${{ secrets.HIERA_FACTS }}"
+          } else {
+            Set-Content -Path ./facts.yaml -Value "no_facts_found: true"
           }
 
-          Write-Host (Get-Content ./facts.yaml)
           $tf_vars = @{}
 
           foreach ($tf_variable in $terraform_data.variables.GetEnumerator()) {
-              $variable_value_json = ./lookup $tf_variable.Key --render-as json
+              $variable_value_json = ./lookup $tf_variable.Key --render-as json --facts ./facts.yaml
 
               if ($null -ne $variable_value_json) {
                   $tf_vars[$tf_variable.Key] = ConvertFrom-Json $variable_value_json -Depth 99
