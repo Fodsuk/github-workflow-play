@@ -60,14 +60,12 @@ jobs:
       - name: Terraform Format Check
         id: fmt
         run: terraform fmt -check
-        continue-on-error: false
       - name: Terraform Init
         id: init
         run: terraform init
       - name: Terraform Validation
         id: validate
         run: terraform validate
-        continue-on-error: false
       - name: Create Fixtures
         id: apply_fixtures
         if: ${{ inputs.has_fixtures }}
@@ -75,12 +73,10 @@ jobs:
           terraform init
           terraform apply --auto-approve
           terraform output > ${{github.workspace}}/${{ inputs.terraform_directory }}/fixture.auto.tfvars
-        continue-on-error: false
         working-directory: ${{ inputs.fixture_directory }}
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        continue-on-error: false
       - name: Terraform Apply
         id: apply
         run: |
@@ -89,7 +85,6 @@ jobs:
           # generate variables_and_outputs.json (can be used by pester tests)
           terraform plan -json -out="plan.raw"
           terraform show -json plan.raw > variables_and_outputs.json
-        continue-on-error: false
         # run tests
       - name: Run Tests
         if: ${{ inputs.has_tests }} && always()
@@ -99,16 +94,19 @@ jobs:
           $pester_config.Output.Verbosity = "Detailed"
           $pester_config.Filter.Tag = "ci"
 
+          throw "tests failed"
+
           Invoke-Pester -Configuration $pester_config
         working-directory: ${{ inputs.test_directory }}
         # destroy all resources
       - name: Destroy Terraform
         if: contains(fromJson('["success", "failure", "cancelled"]'), steps.apply.outcome)
         run: terraform apply -destroy --auto-approve
+        continue-on-error: true
       - name: Destroy Fixtures
         if: contains(fromJson('["success", "failure", "cancelled"]'), steps.apply_fixtures.outcome)
         run: terraform apply -destroy --auto-approve
-        continue-on-error: false
+        continue-on-error: true
         working-directory: ${{ inputs.fixture_directory }}
 
       # - name: Create the plan summary

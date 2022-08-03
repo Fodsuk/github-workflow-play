@@ -59,8 +59,6 @@ jobs:
           "@
           Set-Content -Value $backend -Path .\pipeline_azurerm_backend.tf
 
-          throw "BANG!"
-
           $backend_variables = @"
           resource_group_name  = "${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}"
           storage_account_name = "${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}"
