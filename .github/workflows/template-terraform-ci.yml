@@ -68,6 +68,7 @@ jobs:
         run: terraform validate
       - name: Create Fixtures
         id: apply_fixtures
+        continue-on-error: true
         if: ${{ inputs.has_fixtures }}
         run: |
           terraform init
@@ -79,6 +80,7 @@ jobs:
         run: terraform plan
       - name: Terraform Apply
         id: apply
+        continue-on-error: true
         run: |
           terraform apply --auto-approve
 
@@ -87,6 +89,7 @@ jobs:
           terraform show -json plan.raw > variables_and_outputs.json
         # run tests
       - name: Run Tests
+        continue-on-error: true
         if: ${{ inputs.has_tests }} && always()
         run: |
           Import-Module Pester -RequiredVersion ${{ inputs.pester_version }}
