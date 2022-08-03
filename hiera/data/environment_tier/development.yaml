@@ -1,0 +1,4 @@
+policies:
+  development_policy1:
+    policy_file: sql_server/has_private_link.json
+    set_name: azure_sql
