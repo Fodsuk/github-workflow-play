@@ -75,7 +75,7 @@ download hiera.exe
         run: |
           git clone https://github.com/lyraproj/hiera
           cd ./hiera/lookup
-          go build          
+          go build
           ls
           azcopy login --service-principal --application-id ${{ secrets.CLIENT_ID }} --tenant-id=${{ secrets.TENANT_ID }}
           echo after_login
@@ -84,4 +84,10 @@ download hiera.exe
           azcopy copy 'lookup.exe' 'https://${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}.blob.core.windows.net/hiera/hiera.exe'
         env:
           AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+```
+
+### hiera facts
+```yaml
+environment_tier: development
+management_group: roddas-plt-dev-grp
 ```

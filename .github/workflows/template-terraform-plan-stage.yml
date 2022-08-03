@@ -24,6 +24,8 @@ on:
         required: true
       TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY:
         required: true
+      HIERA_FACTS:
+        required: false
       CLIENT_ID:
         required: true
       CLIENT_SECRET:
@@ -93,6 +95,11 @@ jobs:
 
           $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
 
+          if ("$${{ secrets.HIERA_FACTS }}" -ne "") {
+            Set-Content -Path ./facts.yaml -Value "$${{ secrets.HIERA_FACTS }}"
+          }
+
+          Write-Host (Get-Content ./facts.yaml)
           $tf_vars = @{}
 
           foreach ($tf_variable in $terraform_data.variables.GetEnumerator()) {
