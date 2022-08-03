@@ -7,7 +7,8 @@ jobs:
   tf_plan:
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-plan-stage.yml@init
     with:
-      terraform_version: 1.2.6
+      TERRAFORM_VERSION: 1.2.6
+      ENVIRONMENT: roddas-plt-dev-grp
     secrets:
      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}
      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}

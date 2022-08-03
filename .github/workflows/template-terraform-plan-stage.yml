@@ -2,16 +2,19 @@ on:
   workflow_call:
     inputs:
       # terraform
-      terraform_version:
+      TERRAFORM_VERSION:
         type: string
-      terraform_directory:
+      TERRAFORM_DIRECTORY:
         type: string
         default: src
+       # environment
+      ENVIRONMENT:
+        type: string
       # hiera
-      has_hiera:
+      HAS_HIERA:
         type: boolean
         default: true
-      hiera_directory:
+      HIERA_DIRECTORY:
         type: string
         default: hiera
     secrets:
@@ -31,12 +34,12 @@ on:
         required: true
 jobs:
   plan:
-    name: plan dev terraform
+    name: plan terraform
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: pwsh
-        working-directory: ${{ inputs.terraform_directory }}
+        working-directory: ${{ inputs.TERRAFORM_DIRECTORY }}
     env:
       ARM_CLIENT_ID: "${{ secrets.CLIENT_ID }}"
       ARM_CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
@@ -45,10 +48,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: Install Terraform ${{ inputs.terraform_version }}
+      - name: Install Terraform ${{ inputs.TERRAFORM_VERSION }}
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: ${{ inputs.terraform_version }}
+          terraform_version: ${{ inputs.TERRAFORM_VERSION }}
           terraform_wrapper: false
       - name: Configure Azurerm Backend
         run: |
@@ -67,25 +70,25 @@ jobs:
           "@
           Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
 
-          terraform init -backend-config="${{github.workspace}}/${{ inputs.terraform_directory }}/config.azurerm.tfbackend"
+          terraform init -backend-config="${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/config.azurerm.tfbackend"
         env:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       - name: Download & Build Hiera
-        if: ${{ inputs.has_hiera }}
+        if: ${{ inputs.HAS_HIERA }}
         run: |
           git clone https://github.com/lyraproj/hiera hiera_code
           Push-Location hiera_code/lookup
           go build
-          Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.hiera_directory }} 
+          Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }} 
           Pop-Location
-        working-directory: ${{ inputs.hiera_directory }}
+        working-directory: ${{ inputs.HIERA_DIRECTORY }}
       - name: Generate hiera.auto.tfvars.json from Hiera
-        if: ${{ inputs.has_hiera }}
+        if: ${{ inputs.HAS_HIERA }}
         run: |
           terraform plan -json -out="plan.raw"
-          terraform show -json plan.raw > ${{github.workspace}}/${{ inputs.hiera_directory }}/variables.json
+          terraform show -json plan.raw > ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }}/variables.json
 
-          Push-Location ${{github.workspace}}/${{ inputs.hiera_directory }}
+          Push-Location ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }}
 
           $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
 
@@ -99,7 +102,7 @@ jobs:
               }
           }
           $hiera_tfvars_json = (ConvertTo-Json $tf_vars -Depth 99)
-          Set-Content -Path ${{github.workspace}}/${{ inputs.terraform_directory }}/hiera.auto.tfvars.json -Value $hiera_tfvars_json
+          Set-Content -Path ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/hiera.auto.tfvars.json -Value $hiera_tfvars_json
       - name: Terraform Plan
         run: |
           terraform plan
