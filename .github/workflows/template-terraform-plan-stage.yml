@@ -95,8 +95,8 @@ jobs:
 
           $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
 
-          if ("$${{ secrets.HIERA_FACTS }}" -ne "") {
-            Set-Content -Path ./facts.yaml -Value "$${{ secrets.HIERA_FACTS }}"
+          if ("${{ secrets.HIERA_FACTS }}" -ne "") {
+            Set-Content -Path ./facts.yaml -Value "${{ secrets.HIERA_FACTS }}"
           }
 
           Write-Host (Get-Content ./facts.yaml)
