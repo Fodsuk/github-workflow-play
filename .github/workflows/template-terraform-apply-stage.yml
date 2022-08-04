@@ -79,9 +79,7 @@ jobs:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       - name: Terraform Apply
         run: |
-          terraform init -backend-config="config.azurerm.tfbackend"
           terraform apply terraform.plan
-        working-directory: ${{ github.workspace }}/terraform
           
        # terraform apply
        # support testing
