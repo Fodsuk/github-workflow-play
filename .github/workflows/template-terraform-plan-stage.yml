@@ -51,86 +51,105 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: Install Terraform ${{ inputs.TERRAFORM_VERSION }}
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: ${{ inputs.TERRAFORM_VERSION }}
-          terraform_wrapper: false
-      - name: Configure Azurerm Backend
-        run: |
-          $backend = @"
-            terraform {
-                backend "azurerm" {}
-            }
-          "@
-          Set-Content -Value $backend -Path .\pipeline_azurerm_backend.tf
-
-          $backend_variables = @"
-          resource_group_name  = "${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}"
-          storage_account_name = "${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}"
-          container_name       = "tfstate"
-          key                  = "${{ github.event.repository.name }}.tfstate"
-          "@
-          Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
-
-          terraform init -backend-config="${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/config.azurerm.tfbackend"
-        env:
-          ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
-      - name: Download & Build Hiera
-        if: ${{ inputs.HAS_HIERA }}
-        run: |
-          git clone https://github.com/lyraproj/hiera hiera_code
-          Push-Location hiera_code/lookup
-          go build
-          Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }} 
-          Pop-Location
-        working-directory: ${{ inputs.HIERA_DIRECTORY }}
-      - name: Generate hiera.auto.tfvars.json from Hiera
-        if: ${{ inputs.HAS_HIERA }}
-        run: |
-          terraform plan -json -out="plan.raw"
-          terraform show -json plan.raw > ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }}/variables.json
-
-          Push-Location ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }}
-
-          $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
-
-          if ("${{ secrets.HIERA_FACTS }}" -ne "") {
-            Set-Content -Path ./facts.yaml -Value "${{ secrets.HIERA_FACTS }}"
-          } else {
-            Set-Content -Path ./facts.yaml -Value "no_facts_found: true"
-          }
-
-          $tf_vars = @{}
-
-          foreach ($tf_variable in $terraform_data.variables.GetEnumerator()) {
-              $variable_value_json = ./lookup $tf_variable.Key --render-as json --facts ./facts.yaml
-
-              if ($null -ne $variable_value_json) {
-                  $tf_vars[$tf_variable.Key] = ConvertFrom-Json $variable_value_json -Depth 99
-              }
-          }
-          $hiera_tfvars_json = (ConvertTo-Json $tf_vars -Depth 99)
-          Set-Content -Path ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/hiera.auto.tfvars.json -Value $hiera_tfvars_json
-      - name: Terraform Plan
-        run: |
-          terraform plan -out="terraform.plan"
-      - name: Terraform Archive
-        run: |
-          7z a -t7z ./terraform.7z ./${{ inputs.TERRAFORM_DIRECTORY }} -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
-        working-directory: ${{ github.workspace }}
+      - run: |
+         7z a -t7z ./terraform.7z ./hiera
       - name: Upload Terraform Artifact
         uses: actions/upload-artifact@v3
         with:
          name: terraform_plan_${{ inputs.ENVIRONMENT }}
-         path: ${{github.workspace}}/terraform.7z
+         path: ${{ inputs.TERRAFORM_DIRECTORY }}/terraform.7z
+      - name: Download Terraform Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: terraform_plan_${{ inputs.ENVIRONMENT }}
+          path: ${{github.workspace}}/resources
+      - name: Lets See
+        run: |
+          ls -R
+        working-directory: ${{ github.workspace }}
 
-      # set up state file connectivity - DONE
-      # install terraform, init - DONE
-      # install hiera - DONE
-      # pass hiera facts from environment - DONE
-      # create variables.yaml from environment variables - NEEDS REVIEWING
-      # iterate each terraform variable and look up in hiera -DONE
-      # create hiera.auto.tfvars.json - DONE
-      # terraform plan -out=plan - DONE
-      # put plan in artifact - DONE
+
+
+      # - name: Install Terraform ${{ inputs.TERRAFORM_VERSION }}
+      #   uses: hashicorp/setup-terraform@v2
+      #   with:
+      #     terraform_version: ${{ inputs.TERRAFORM_VERSION }}
+      #     terraform_wrapper: false
+      # - name: Configure Azurerm Backend
+      #   run: |
+      #     $backend = @"
+      #       terraform {
+      #           backend "azurerm" {}
+      #       }
+      #     "@
+      #     Set-Content -Value $backend -Path .\pipeline_azurerm_backend.tf
+
+      #     $backend_variables = @"
+      #     resource_group_name  = "${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}"
+      #     storage_account_name = "${{ secrets.TFSTATE_STORAGE_ACCOUNT_NAME }}"
+      #     container_name       = "tfstate"
+      #     key                  = "${{ github.event.repository.name }}.tfstate"
+      #     "@
+      #     Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
+
+      #     terraform init -backend-config="${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/config.azurerm.tfbackend"
+      #   env:
+      #     ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
+      # - name: Download & Build Hiera
+      #   if: ${{ inputs.HAS_HIERA }}
+      #   run: |
+      #     git clone https://github.com/lyraproj/hiera hiera_code
+      #     Push-Location hiera_code/lookup
+      #     go build
+      #     Copy-Item lookup -Destination ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }} 
+      #     Pop-Location
+      #   working-directory: ${{ inputs.HIERA_DIRECTORY }}
+      # - name: Generate hiera.auto.tfvars.json from Hiera
+      #   if: ${{ inputs.HAS_HIERA }}
+      #   run: |
+      #     terraform plan -json -out="plan.raw"
+      #     terraform show -json plan.raw > ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }}/variables.json
+
+      #     Push-Location ${{github.workspace}}/${{ inputs.HIERA_DIRECTORY }}
+
+      #     $terraform_data = Get-Content variables.json | Out-String | ConvertFrom-Json -Depth 99 -AsHashtable
+
+      #     if ("${{ secrets.HIERA_FACTS }}" -ne "") {
+      #       Set-Content -Path ./facts.yaml -Value "${{ secrets.HIERA_FACTS }}"
+      #     } else {
+      #       Set-Content -Path ./facts.yaml -Value "no_facts_found: true"
+      #     }
+
+      #     $tf_vars = @{}
+
+      #     foreach ($tf_variable in $terraform_data.variables.GetEnumerator()) {
+      #         $variable_value_json = ./lookup $tf_variable.Key --render-as json --facts ./facts.yaml
+
+      #         if ($null -ne $variable_value_json) {
+      #             $tf_vars[$tf_variable.Key] = ConvertFrom-Json $variable_value_json -Depth 99
+      #         }
+      #     }
+      #     $hiera_tfvars_json = (ConvertTo-Json $tf_vars -Depth 99)
+      #     Set-Content -Path ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/hiera.auto.tfvars.json -Value $hiera_tfvars_json
+      # - name: Terraform Plan
+      #   run: |
+      #     terraform plan -out="terraform.plan"
+      # - name: Terraform Archive
+      #   run: |
+      #     7z a -t7z ./terraform.7z ./${{ inputs.TERRAFORM_DIRECTORY }} -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
+      #   working-directory: ${{ github.workspace }}
+      # - name: Upload Terraform Artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #    name: terraform_plan_${{ inputs.ENVIRONMENT }}
+      #    path: ${{github.workspace}}/terraform.7z
+
+      # # set up state file connectivity - DONE
+      # # install terraform, init - DONE
+      # # install hiera - DONE
+      # # pass hiera facts from environment - DONE
+      # # create variables.yaml from environment variables - NEEDS REVIEWING
+      # # iterate each terraform variable and look up in hiera -DONE
+      # # create hiera.auto.tfvars.json - DONE
+      # # terraform plan -out=plan - DONE
+      # # put plan in artifact - DONE
