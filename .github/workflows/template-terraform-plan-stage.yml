@@ -63,7 +63,7 @@ jobs:
                 backend "azurerm" {}
             }
           "@
-          Set-Content -Value $backend -Path .\pipeline_azurerm_backend.tf
+          Set-Content -Value $backend -Path pipeline_azurerm_backend.tf
 
           $backend_variables = @"
           resource_group_name  = "${{ secrets.TFSTATE_RESOURCE_GROUP_NAME }}"
@@ -71,9 +71,9 @@ jobs:
           container_name       = "tfstate"
           key                  = "${{ github.event.repository.name }}.tfstate"
           "@
-          Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
+          Set-Content -Value $backend_variables -Path config.azurerm.tfbackend
 
-          terraform init -backend-config="${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/config.azurerm.tfbackend"
+          terraform init -backend-config="./config.azurerm.tfbackend"
         env:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       - name: Download & Build Hiera

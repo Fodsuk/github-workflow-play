@@ -72,7 +72,7 @@ jobs:
           container_name       = "tfstate"
           key                  = "${{ github.event.repository.name }}.tfstate"
           "@
-          Set-Content -Value $backend_variables -Path .\config.azurerm.tfbackend
+          Set-Content -Value $backend_variables -Path config.azurerm.tfbackend
 
           terraform init -backend-config="${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/config.azurerm.tfbackend"
         env:
