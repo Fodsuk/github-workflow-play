@@ -43,6 +43,10 @@ jobs:
       - name: Upzip Terraform Artifacts
         run: |
           7z x -t7z terraform.7z -o${{ github.workspace }}/terraform -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
+      - name: Install Terraform ${{ inputs.TERRAFORM_VERSION }}
+        uses: hashicorp/setup-terraform@v2
       - name: Terraform Apply
         run: |
-          ls -R
+          terraform apply terraform.plan
+        working-directory: ${{ github.workspace }}/terraform
+          
