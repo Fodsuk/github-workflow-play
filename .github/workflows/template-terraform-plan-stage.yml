@@ -118,7 +118,7 @@ jobs:
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v3
         with:
-         name: terraform_plan_${{ inputs.ENVIRONMENT}}
+         name: terraform_plan_${{ inputs.ENVIRONMENT }}
          path: ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/terraform.plan
 
       # set up state file connectivity - DONE
