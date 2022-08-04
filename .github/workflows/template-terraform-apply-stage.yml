@@ -47,7 +47,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
       - name: Terraform Apply
         run: |
-          ls -R
+          terraform init -backend-config="config.azurerm.tfbackend"
           terraform apply terraform.plan
         working-directory: ${{ github.workspace }}/terraform
           
