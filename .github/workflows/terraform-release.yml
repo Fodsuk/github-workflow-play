@@ -1,12 +1,14 @@
 name: terraform Release
-on: [workflow_dispatch, push]
-inputs:
-    TERRAFORM_VERSION:
-      type: string
-      default: 1.2.6
-    TERRAFORM_DIRECTORY:
-      type: string
-      default: src
+on:
+  workflow_dispatch:
+  push:
+    inputs:
+      TERRAFORM_VERSION:
+        type: string
+        default: 1.2.6
+      TERRAFORM_DIRECTORY:
+        type: string
+        default: src
 permissions:
   id-token: write
   contents: read
@@ -18,14 +20,14 @@ jobs:
       TERRAFORM_DIRECTORY: ${{ inputs.TERRAFORM_DIRECTORY }}
       ENVIRONMENT: management-group-roddas-plt-dev-grp
     secrets:
-     TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
-     TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
-     TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
-     HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
-     CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
-     CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
-     SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
-     TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
+      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+      HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
+      CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   tf_apply:
     needs: [tf_plan]
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-apply-stage.yml@init
@@ -34,11 +36,11 @@ jobs:
       TERRAFORM_DIRECTORY: ${{ inputs.TERRAFORM_DIRECTORY }}
       ENVIRONMENT: management-group-roddas-plt-dev-grp
     secrets:
-     TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
-     TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
-     TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
-     HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
-     CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
-     CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
-     SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
-     TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
+      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+      HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
+      CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
