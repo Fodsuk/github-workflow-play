@@ -40,13 +40,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: terraform_plan_${{ inputs.ENVIRONMENT }}
-          path: ${{ github.workspace }}/resources
+          #path: ${{ github.workspace }}/resources
       - name: Upzip Terraform Artifacts
         run: |
           ls -R
-          7z e -t7z ${{ github.workspace }}/resources/terraform.7z
+          7z e -t7z terraform.7z #${{ github.workspace }}/resources/terraform.7z
           ls -R
       - name: Terraform Apply
         run: |
           ls -R
-        working-directory: ${{ github.workspace }}
+        #working-directory: ${{ github.workspace }}
