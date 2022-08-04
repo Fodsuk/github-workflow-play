@@ -48,5 +48,5 @@ jobs:
           ls -R
       - name: Terraform Apply
         run: |
-          ls
-        working-directory: ${{ github.workspace }}/resources/terraform
+          ls -R
+        working-directory: ${{ github.workspace }}
