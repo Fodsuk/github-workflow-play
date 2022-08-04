@@ -43,9 +43,7 @@ jobs:
           #path: ${{ github.workspace }}/resources
       - name: Upzip Terraform Artifacts
         run: |
-          ls -R
           7z e -t7z terraform.7z #${{ github.workspace }}/resources/terraform.7z
-          ls -R
       - name: Terraform Apply
         run: |
           ls -R
