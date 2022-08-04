@@ -115,7 +115,8 @@ jobs:
       - name: Terraform Plan
         run: |
           terraform plan -out=terraform.plan
-      - uses: actions/upload-artifacts@v3
+      - name: Upload Terraform Plan
+        uses: actions/upload-artifact@v3
         with:
          name: terraform_plan
          path: ./terraform.plan
