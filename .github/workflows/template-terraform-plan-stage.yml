@@ -119,7 +119,7 @@ jobs:
         run: |
           7z a -t7z ./terraform.7z ./${{ inputs.TERRAFORM_DIRECTORY }} -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
         working-directory: ${{ github.workspace }}
-      - name: Upload Terraform Plan
+      - name: Upload Terraform Artifact
         uses: actions/upload-artifact@v3
         with:
          name: terraform_plan_${{ inputs.ENVIRONMENT }}
