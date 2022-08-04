@@ -115,9 +115,9 @@ jobs:
       - name: Terraform Plan
         run: |
           terraform plan -out="terraform.plan"
-      - name: Terraform Archive
+      - name: Terraform Archive Plan
         run: |
-          7z a -t7z ./terraform.7z ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/* -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
+          7z a -t7z ./terraform.7z ./terraform.plan -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       - name: Upload Terraform Artifact
         uses: actions/upload-artifact@v3
         with:
