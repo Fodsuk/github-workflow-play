@@ -122,7 +122,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
          name: terraform_plan_${{ inputs.ENVIRONMENT }}
-         path: ${{github.workspace}}/terraform.7z
+         path: ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/terraform.7z
 
       # set up state file connectivity - DONE
       # install terraform, init - DONE
