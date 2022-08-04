@@ -1,14 +1,6 @@
 name: terraform Release
 #workflow_dispatch:
-on:
-  push:
-    inputs:
-      TERRAFORM_VERSION:
-        type: string
-        default: 1.2.6
-      TERRAFORM_DIRECTORY:
-        type: string
-        default: src
+on: [workflow_dispatch, push]
 permissions:
   id-token: write
   contents: read
@@ -16,8 +8,7 @@ jobs:
   tf_plan:
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-plan-stage.yml@init
     with:
-      TERRAFORM_VERSION: ${{ inputs.TERRAFORM_VERSION }}
-      TERRAFORM_DIRECTORY: ${{ inputs.TERRAFORM_DIRECTORY }}
+      TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
     secrets:
       TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
@@ -32,7 +23,7 @@ jobs:
     needs: [tf_plan]
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-apply-stage.yml@init
     with:
-      TERRAFORM_VERSION: ${{ inputs.TERRAFORM_VERSION }}
+      TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
     secrets:
       TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
