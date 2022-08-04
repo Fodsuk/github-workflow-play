@@ -42,7 +42,7 @@ jobs:
           name: terraform_plan_${{ inputs.ENVIRONMENT }}
       - name: Upzip Terraform Artifacts
         run: |
-          7z e -t7z terraform.7z #${{ github.workspace }}/resources/terraform.7z
+          7z e -t7z terraform.7z #${{ github.workspace }}/resources/terraform.7z -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       - name: Terraform Apply
         run: |
           ls -R
