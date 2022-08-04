@@ -115,11 +115,12 @@ jobs:
       - name: Terraform Plan
         run: |
           terraform plan -out="terraform.plan"
+          7z a -t7z terraform_plan.7z terraform.plan -p${{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v3
         with:
          name: terraform_plan_${{ inputs.ENVIRONMENT }}
-         path: ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/terraform.plan
+         path: ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/terraform_plan.7z
 
       # set up state file connectivity - DONE
       # install terraform, init - DONE
