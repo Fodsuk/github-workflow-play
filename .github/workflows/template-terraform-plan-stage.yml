@@ -115,7 +115,7 @@ jobs:
       - name: Terraform Plan
         run: |
           terraform plan -out="terraform.plan"
-          7z a -t7z terraform_plan.7z terraform.plan
+          7z a -t7z terraform_plan.7z ./terraform.plan
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v3
         with:
