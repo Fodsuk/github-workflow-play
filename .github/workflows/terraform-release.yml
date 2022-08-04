@@ -33,13 +33,11 @@ jobs:
     uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-apply-stage.yml@init
     with:
       TERRAFORM_VERSION: ${{ inputs.TERRAFORM_VERSION }}
-      TERRAFORM_DIRECTORY: ${{ inputs.TERRAFORM_DIRECTORY }}
       ENVIRONMENT: management-group-roddas-plt-dev-grp
     secrets:
       TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
       TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
       TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
-      HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
       CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
