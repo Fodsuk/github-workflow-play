@@ -46,6 +46,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: terraform_plan_${{ inputs.ENVIRONMENT }}
+          path: ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}
       - name: Upzip Terraform Artifacts
         run: |
           7z x -t7z terraform.7z -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
