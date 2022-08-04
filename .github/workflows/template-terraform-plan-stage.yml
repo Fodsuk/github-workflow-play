@@ -115,11 +115,12 @@ jobs:
       - name: Terraform Plan
         run: |
           terraform plan -out="terraform.plan"
+          ls
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v3
         with:
          name: terraform_plan
-         path: ./terraform.plan
+         path: ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/terraform.plan
 
       # set up state file connectivity - DONE
       # install terraform, init - DONE
