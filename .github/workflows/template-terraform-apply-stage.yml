@@ -50,8 +50,6 @@ jobs:
       - name: Upzip Terraform Artifacts
         run: |
           7z x -t7z terraform.7z -p"{{ $secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
-
-          ls -R
       - name: Install Terraform ${{ inputs.TERRAFORM_VERSION }}
         uses: hashicorp/setup-terraform@v2
         with:
@@ -74,12 +72,12 @@ jobs:
           "@
           Set-Content -Value $backend_variables -Path config.azurerm.tfbackend
 
-          terraform init -backend-config="${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/config.azurerm.tfbackend"
+          terraform init -backend-config="./config.azurerm.tfbackend"
         env:
           ARM_ACCESS_KEY: "${{ secrets.TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}"
       - name: Terraform Apply
         run: |
           terraform apply terraform.plan
           
-       # terraform apply
-       # support testing
+       # terraform apply - DONE
+       # support testing after
