@@ -1,6 +1,6 @@
 name: terraform Release
+#workflow_dispatch:
 on:
-  workflow_dispatch:
   push:
     inputs:
       TERRAFORM_VERSION:
