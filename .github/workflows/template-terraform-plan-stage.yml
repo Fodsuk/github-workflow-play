@@ -51,6 +51,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+      - name: comp_action
+        uses: Fodsuk/github-workflow-play/.github/actions/generate-tfvars-from-hiera.yml@init
+        with:
+          who-to-greet: 'Mona the Octocat'
       - name: Install Terraform ${{ inputs.TERRAFORM_VERSION }}
         uses: hashicorp/setup-terraform@v2
         with:
@@ -124,12 +128,5 @@ jobs:
          name: terraform_plan_${{ inputs.ENVIRONMENT }}
          path: ${{github.workspace}}/${{ inputs.TERRAFORM_DIRECTORY }}/terraform.7z
 
-      # set up state file connectivity - DONE
-      # install terraform, init - DONE
-      # install hiera - DONE
-      # pass hiera facts from environment - DONE
-      # create variables.yaml from environment variables - NEEDS REVIEWING
-      # iterate each terraform variable and look up in hiera -DONE
-      # create hiera.auto.tfvars.json - DONE
-      # terraform plan -out=plan - DONE
-      # put plan in artifact - DONE
+      # create hiera variables.yaml from environment variables - NEEDS REVIEWING
+
