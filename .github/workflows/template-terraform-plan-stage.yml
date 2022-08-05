@@ -52,7 +52,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - name: comp_action
-        uses: Fodsuk/github-workflow-play/.github/actions/generate-tfvars-from-hiera/action.yml@init
+        uses: ./.github/actions/generate-tfvars-from-hiera
         with:
           who-to-greet: 'Mona the Octocat'
       - name: Install Terraform ${{ inputs.TERRAFORM_VERSION }}
