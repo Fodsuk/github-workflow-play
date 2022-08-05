@@ -5,7 +5,7 @@ permissions:
   contents: read
 jobs:
   tf:
-    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-ci.yml@init
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-ci.yml@main
     with:
       terraform_version: 1.2.6
     secrets:
