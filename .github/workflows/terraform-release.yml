@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   tf_plan:
-    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-plan-stage.yml@init
+    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-plan-stage/action.yml@init
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
