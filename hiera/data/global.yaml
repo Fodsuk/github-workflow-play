@@ -1,7 +1,7 @@
 policy_sets:
   azure_sql:
-    display_name: Azure SQL - Must have Private Link Configured
-    description: Azure SQL - Must have Private Link Configured
+    display_name: SQL Server - Must have Private Link Configured
+    description: SQL Server - Must have Private Link Configured
     metadata:
       category: sql
       version: 1.0.0
