@@ -21,7 +21,7 @@ jobs:
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   tf_apply:
     needs: [tf_plan]
-    uses: Fodsuk/github-workflow-play/.github/workflows/template-terraform-apply-stage.yml@init
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@main
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
