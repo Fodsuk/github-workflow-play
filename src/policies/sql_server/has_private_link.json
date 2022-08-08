@@ -6,7 +6,8 @@
         "description": "Private endpoint connections enforce secure communication by enabling private connectivity to Azure SQL Database.",
         "metadata": {
             "version": "1.0.0",
-            "category": "SQL"
+            "category": "SQL",
+            "owners": "platform"
         },
         "parameters": {
             "effect": {

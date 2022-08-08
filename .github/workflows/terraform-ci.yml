@@ -1,15 +1,15 @@
-name: terraform CI
+name: Continuous Integration
 on: [workflow_dispatch, pull_request]
 permissions:
   id-token: write
   contents: read
 jobs:
-  tf:
+  terraform:
     uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-ci.yml@main
     with:
       terraform_version: 1.2.6
     secrets:
-     CLIENT_ID: ${{ secrets.CLIENT_ID }}
-     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-     SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-     TENANT_ID: ${{ secrets.TENANT_ID }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.TENANT_ID }}
