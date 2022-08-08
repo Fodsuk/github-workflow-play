@@ -1,6 +1,5 @@
 name: terraform Release
-#workflow_dispatch:
-on: [workflow_dispatch, push]
+on: [workflow_dispatch]
 permissions:
   id-token: write
   contents: read
