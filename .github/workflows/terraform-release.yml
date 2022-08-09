@@ -20,6 +20,7 @@ jobs:
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   dev_apply:
+    if: github.ref == 'refs/heads/main'
     needs: [dev_plan]
     if: github.ref == 'refs/heads/main'
     uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v0.0.1
