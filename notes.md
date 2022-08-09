@@ -99,4 +99,4 @@ management_group: roddas-plt-dev-grp
    - put workflow templates in private repo DONE
 - Add PR plan check - DONE
 - tag a release with semver
-- Add PR Plan summary, lets see again(x3)
+- Add PR Plan summary, try v5?
