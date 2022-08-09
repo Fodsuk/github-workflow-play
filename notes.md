@@ -92,7 +92,6 @@ environment_tier: development
 management_group: roddas-plt-dev-grp
 ```
 
-
 # todo
 - look at creating generic actions
 - set up github enterprise
