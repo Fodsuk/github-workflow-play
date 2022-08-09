@@ -1,5 +1,15 @@
 name: Terraform Pull Request
-on: [workflow_dispatch, pull_request]
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - converted_to_draft
+    branches:
+      - main
 permissions:
   id-token: write
   contents: read
@@ -45,4 +55,4 @@ jobs:
       CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
-      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}  
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
