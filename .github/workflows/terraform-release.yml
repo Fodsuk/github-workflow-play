@@ -4,7 +4,7 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  tf_plan:
+  dev_plan:
     uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@main
     with:
       TERRAFORM_VERSION: 1.2.6
@@ -18,8 +18,8 @@ jobs:
       CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
-  tf_apply:
-    needs: [tf_plan]
+  dev_apply:
+    needs: [dev_plan]
     uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@main
     with:
       TERRAFORM_VERSION: 1.2.6
