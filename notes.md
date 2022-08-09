@@ -97,6 +97,6 @@ management_group: roddas-plt-dev-grp
 - set up github enterprise
    - move to private repo CANT, NEED ENTERPRISE ACCOUNT
    - put workflow templates in private repo DONE
-- Add PR plan check
+- Add PR plan check - DONE
 - tag a release with semver
-- 
+- Add PR Plan summary
