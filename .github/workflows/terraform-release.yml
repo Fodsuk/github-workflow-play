@@ -6,7 +6,7 @@ permissions:
 jobs:
   dev_plan:
     if: github.ref == 'refs/heads/main'
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@main
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v0.0.1
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
@@ -22,7 +22,8 @@ jobs:
   dev_apply:
     if: github.ref == 'refs/heads/main'
     needs: [dev_plan]
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@main
+    if: github.ref == 'refs/heads/main'
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v0.0.1
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
