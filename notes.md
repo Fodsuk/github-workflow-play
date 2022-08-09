@@ -92,9 +92,11 @@ environment_tier: development
 management_group: roddas-plt-dev-grp
 ```
 
-
 # todo
 - look at creating generic actions
 - set up github enterprise
-   - move to private repo
-   - put workflow templates in private repo
+   - move to private repo CANT, NEED ENTERPRISE ACCOUNT
+   - put workflow templates in private repo DONE
+- Add PR plan check - DONE
+- tag a release with semver
+- Add PR Plan summary ( TODO )
