@@ -1,0 +1,20 @@
+name: Terraform Pull Request
+on: [workflow_dispatch]
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  tf_plan:
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@main
+    with:
+      TERRAFORM_VERSION: 1.2.6
+      ENVIRONMENT: management-group-roddas-plt-dev-grp
+    secrets:
+      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+      HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
+      CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}

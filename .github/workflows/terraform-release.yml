@@ -1,4 +1,4 @@
-name: terraform Release
+name: Terraform Release
 on: [workflow_dispatch]
 permissions:
   id-token: write
