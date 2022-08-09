@@ -5,7 +5,8 @@ permissions:
   contents: read
 jobs:
   dev_plan:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@main
+    if: github.ref == 'refs/heads/main'
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v0.0.1
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
@@ -20,7 +21,8 @@ jobs:
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   dev_apply:
     needs: [dev_plan]
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@main
+    if: github.ref == 'refs/heads/main'
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.ymlv0.0.1
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
