@@ -1,5 +1,11 @@
 version: 5
 hierarchy:
+  # ci overrides
+  - name: continuous integration
+    path: continuous_integration/%{environment_tier}.yaml
+  - name: fixtures (added by ci pipeline)
+    path: fixture_outputs.json
+ # main
   - name: options
     path: options.yaml
   - name: management group

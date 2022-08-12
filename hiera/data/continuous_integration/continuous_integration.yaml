@@ -1,0 +1,27 @@
+lookup_options:
+  policy_resource_group_assignments:
+    merge: first
+  policy_management_group_assignments:
+    merge: first
+
+### Expected variables from fixture_outputs.json
+# private_link_endpoint_subnet_id
+# assignment_resource_group_id
+
+policy_management_group_assignments: null
+
+policy_resource_group_assignments:
+  ci_assignment_sql_server_enable_private_link:
+    policy_key: sql_server_enable_private_link
+    display_name: CI Sql Server Enable Private Link
+    description: CI Sql Server Enable Private Link
+    resource_group_id: "%{lookup('assignment_resource_group_id')}"
+    metadata:
+      purpose: CI
+    managed_identity_required_roles: true
+    parameters_json: |
+      {
+        "privateEndpointSubnetId":{
+            "value":"%{lookup('private_link_endpoint_subnet_id')}"
+        }
+      }

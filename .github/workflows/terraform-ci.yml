@@ -9,11 +9,13 @@ permissions:
   contents: read
 jobs:
   terraform:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-ci.yml@feature/support-hiera-in-ci-pipeline
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-ci.yml@main
     with:
-      terraform_version: 1.2.6
+      TERRAFORM_VERSION: 1.2.6
+      ENVIRONMENT: ci
     secrets:
-      CLIENT_ID: ${{ secrets.CLIENT_ID }}
-      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-      SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-      TENANT_ID: ${{ secrets.TENANT_ID }}
+      HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
+      CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}

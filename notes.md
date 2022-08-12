@@ -33,7 +33,7 @@ variable "policies" {
 ## creating and assigning SP role
 
 ### create SP
-az ad sp create-for-rbac --display-name "my-sp-name" --years 2 --sdk-auth
+az ad sp create-for-rbac --name "my-sp-name" --years 2 --sdk-auth
 
 ### assign roles to MG for SP
 
@@ -90,7 +90,11 @@ download hiera.exe
 ```yaml
 environment_tier: development
 management_group: roddas-plt-dev-grp
+
+environment_tier: continuous_integration
+environment: ci
 ```
+
 
 # todo
 - look at creating generic actions
