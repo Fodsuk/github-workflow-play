@@ -1,12 +1,3 @@
-policy_sets:
-  azure_sql:
-    display_name: SQL Server - Must have Private Link Configured
-    description: SQL Server - Must have Private Link Configured
-    metadata:
-      category: sql
-      version: 1.0.0
-
 policies:
-  sql_has_private_link:
-    policy_file: sql_server/has_private_link.json
-    set_name: azure_sql
+  cosmos_db_local_auth_disabled:
+    policy_file: cosmos_db/local_auth_disabled.json

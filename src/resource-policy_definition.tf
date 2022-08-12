@@ -14,6 +14,8 @@ resource "azurerm_policy_definition" "schroders" {
   parameters  = jsonencode(jsondecode(file("${path.module}/policies/${each.value.policy_file}"))["properties"]["parameters"])
   policy_rule = jsonencode(jsondecode(file("${path.module}/policies/${each.value.policy_file}"))["properties"]["policyRule"])
 
+  management_group_id = var.policy_scope.management_group_id
+
   lifecycle {
     //https://github.com/hashicorp/terraform-provider-azurerm/issues/15615
     create_before_destroy = true
