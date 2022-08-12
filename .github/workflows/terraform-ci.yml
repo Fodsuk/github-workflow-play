@@ -2,9 +2,8 @@ name: Continuous Integration
 on:
   workflow_dispatch:
   push:
-    branches:
-      - feature/*
-      - bug/*
+    branches-ignore:
+      - main
 permissions:
   id-token: write
   contents: read
