@@ -22,7 +22,6 @@ jobs:
   dev_apply:
     if: github.ref == 'refs/heads/main'
     needs: [dev_plan]
-    if: github.ref == 'refs/heads/main'
     uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.0
     with:
       TERRAFORM_VERSION: 1.2.6

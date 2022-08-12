@@ -1,3 +1,0 @@
-output "location" {
-  value = "uksouth"
-}
