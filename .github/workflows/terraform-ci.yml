@@ -10,7 +10,7 @@ permissions:
   contents: read
 jobs:
   terraform:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-ci.yml@v1.0.0
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-ci.yml@feature/support-hiera-in-ci-pipeline
     with:
       terraform_version: 1.2.6
     secrets:
