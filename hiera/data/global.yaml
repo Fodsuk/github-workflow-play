@@ -2,5 +2,8 @@ location: uksouth
 environment: global
 
 policies:
-  cosmos_db_local_auth_disabled:
-    policy_file: cosmos_db/local_auth_disabled.json
+  sql_server_enable_private_link:
+    policy_file: sql_server/enable_private_link.json
+    managed_identity_required_roles:
+      - Network Contributor
+      - SQL Server Contributor
