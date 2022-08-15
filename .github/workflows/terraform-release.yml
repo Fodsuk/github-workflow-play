@@ -4,12 +4,11 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  dev_plan:
-    if: github.ref == 'refs/heads/main'
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.0
+  plan_dev:
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.13
     with:
       TERRAFORM_VERSION: 1.2.6
-      ENVIRONMENT: management-group-roddas-plt-dev-grp
+      ENVIRONMENT: management-group-roddas-plt-dev-grp-reader
     secrets:
       TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
       TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
@@ -19,13 +18,72 @@ jobs:
       CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
-  dev_apply:
+  plan_uat:
     if: github.ref == 'refs/heads/main'
-    needs: [dev_plan]
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.0
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.13
+    with:
+      TERRAFORM_VERSION: 1.2.6
+      ENVIRONMENT: management-group-roddas-plt-uat-grp-reader
+    secrets:
+      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+      HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
+      CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
+  plan_prd:
+    if: github.ref == 'refs/heads/main'
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.13
+    with:
+      TERRAFORM_VERSION: 1.2.6
+      ENVIRONMENT: management-group-roddas-plt-prd-grp-reader
+    secrets:
+      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+      HIERA_FACTS: ${{ secrets.ENVIRONMENT_HIERA_FACTS }}
+      CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
+  apply_dev:
+    needs: [plan_dev]
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.13
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
+    secrets:
+      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+      CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
+  apply_uat:
+    if: github.ref == 'refs/heads/main'
+    needs: [apply_dev, plan_uat]
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.13
+    with:
+      TERRAFORM_VERSION: 1.2.6
+      ENVIRONMENT: management-group-roddas-plt-uat-grp
+    secrets:
+      TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
+      TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_ACCESS_KEY }}
+      CLIENT_ID: ${{ secrets.ENVIRONMENT_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.ENVIRONMENT_CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
+      TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
+  apply_prd:
+    if: github.ref == 'refs/heads/main'
+    needs: [apply_uat, plan_prd]
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.13
+    with:
+      TERRAFORM_VERSION: 1.2.6
+      ENVIRONMENT: management-group-roddas-plt-prd-grp
     secrets:
       TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
       TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}

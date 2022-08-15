@@ -15,10 +15,10 @@ permissions:
   contents: read
 jobs:
   dev:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@main
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.13
     with:
       TERRAFORM_VERSION: 1.2.6
-      ENVIRONMENT: management-group-roddas-plt-dev-grp
+      ENVIRONMENT: management-group-roddas-plt-dev-grp-reader
     secrets:
       TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
       TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
@@ -29,10 +29,10 @@ jobs:
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   uat:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@main
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.13
     with:
       TERRAFORM_VERSION: 1.2.6
-      ENVIRONMENT: management-group-roddas-plt-uat-grp
+      ENVIRONMENT: management-group-roddas-plt-uat-grp-reader
     secrets:
       TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
       TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}
@@ -43,10 +43,10 @@ jobs:
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   prod:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@main
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.13
     with:
       TERRAFORM_VERSION: 1.2.6
-      ENVIRONMENT: management-group-roddas-plt-prd-grp
+      ENVIRONMENT: management-group-roddas-plt-prd-grp-reader
     secrets:
       TFSTATE_RESOURCE_GROUP_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_RESOURCE_GROUP_NAME }}
       TFSTATE_STORAGE_ACCOUNT_NAME: ${{ secrets.ENVIRONMENT_TFSTATE_STORAGE_ACCOUNT_NAME }}

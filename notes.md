@@ -33,15 +33,19 @@ variable "policies" {
 ## creating and assigning SP role
 
 ### create SP
-az ad sp create-for-rbac --name "my-sp-name" --years 2 --sdk-auth
+az ad sp create-for-rbac --name "ENVIRONMENT_NAME(-contributor|-reader)" --years 2 --sdk-auth
 
 ### assign roles to MG for SP
 
+#### contributor roles required
 - `Contributor`
 - `User Access Administrator` (may only need Resource Policy Contributor)
 - `Resource Policy Contributor`
  az role assignment create --role ROLE_NAME --scope /providers/Microsoft.Management/managementGroups/my-mg-grp --assignee-object-id SP_OBJECT_ID
 
+#### reader roles required
+- reader
+- Storage Account Contributor
 
 ### to set up storage account backend
 need to add a .tf file (e.g. backend_pipeline.tf)
@@ -88,19 +92,16 @@ download hiera.exe
 
 ### hiera facts
 ```yaml
+
 environment_tier: development
-management_group: roddas-plt-dev-grp
+environment_name: roddas-plt-dev-grp
+
+environment_tier: uat
+environment_name: roddas-plt-prd-grp
+
+environment_tier: production
+environment_name: roddas-plt-prd-grp
 
 environment_tier: continuous_integration
 environment: ci
 ```
-
-
-# todo
-- look at creating generic actions
-- set up github enterprise
-   - move to private repo CANT, NEED ENTERPRISE ACCOUNT
-   - put workflow templates in private repo DONE
-- Add PR plan check - DONE
-- tag a release with semver
-- Add PR Plan summary (nice to have)
