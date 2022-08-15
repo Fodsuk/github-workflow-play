@@ -46,7 +46,7 @@ Describe 'SQL Server Policies' -Tag "ci" {
 
         AfterAll {
             Write-Host "cleaning up sql resources"
-            az group delete --name $resource_group_name
+            az group delete --name $resource_group_name --yes
         }
 
     }
