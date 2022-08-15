@@ -4,14 +4,10 @@ resource "random_string" "assignment_name" {
 }
 
 resource "azurerm_resource_group" "assignment" {
-  name     = "policy-ci-${random_string.assignment_name.result}"
+  name     = "policy-ci-policy-assignment-${random_string.assignment_name.result}"
   location = "UK South"
 }
 
 output "assignment_resource_group_id" {
   value = azurerm_resource_group.assignment.id
-}
-
-output "assignment_resource_group" {
-  value = azurerm_resource_group.assignment
 }

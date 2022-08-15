@@ -18,7 +18,7 @@ policy_resource_group_assignments:
     resource_group_id: "%{lookup('assignment_resource_group_id')}"
     metadata:
       purpose: CI
-    #managed_identity_required: true
+    managed_identity_required: true
     parameters_json: |
       {
         "privateEndpointSubnetId":{
