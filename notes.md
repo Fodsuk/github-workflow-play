@@ -92,7 +92,6 @@ download hiera.exe
 
 ### hiera facts
 ```yaml
-
 environment_tier: development
 environment_name: roddas-plt-dev-grp
 
