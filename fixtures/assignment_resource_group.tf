@@ -5,7 +5,7 @@ resource "random_string" "assignment_name" {
 
 resource "azurerm_resource_group" "assignment" {
   name     = "policy-ci-policy-assignment-${random_string.assignment_name.result}"
-  location = "UK South"
+  location = "LOCATION UNKNOWN"
 }
 
 output "assignment_resource_group_id" {
