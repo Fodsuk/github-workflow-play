@@ -5,7 +5,7 @@ permissions:
   contents: read
 jobs:
   plan_dev:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.13
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.15
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp-reader
@@ -20,7 +20,7 @@ jobs:
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   plan_uat:
     if: github.ref == 'refs/heads/main'
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.13
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.15
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-uat-grp-reader
@@ -35,7 +35,7 @@ jobs:
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   plan_prd:
     if: github.ref == 'refs/heads/main'
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.13
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.15
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-prd-grp-reader
@@ -50,7 +50,7 @@ jobs:
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   apply_dev:
     needs: [plan_dev]
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.13
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.15
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp
@@ -65,7 +65,7 @@ jobs:
   apply_uat:
     if: github.ref == 'refs/heads/main'
     needs: [apply_dev, plan_uat]
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.13
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.15
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-uat-grp
@@ -80,7 +80,7 @@ jobs:
   apply_prd:
     if: github.ref == 'refs/heads/main'
     needs: [apply_uat, plan_prd]
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.13
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-apply-stage.yml@v1.0.15
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-prd-grp

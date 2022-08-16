@@ -25,7 +25,7 @@ Describe 'SQL Server Policies' -Tag "ci" {
             $sql_server = ConvertFrom-Json ((az sql server show --name $sql_server_name --resource-group $resource_group_name) | Out-String) -Depth 99 -AsHashtable
             $sql_server_resource_id = $sql_server.id
 
-            Write-Host "create remediation task"
+            Write-Host "create remediation task for ($sql_server_resource_id)"
             az policy remediation create -n "$sql_server_name" --policy-assignment "$policy_assignment_id" --resource "$sql_server_resource_id" --location-filters "UKSouth" --resource-discovery-mode ReEvaluateCompliance
 
             $remediation_running = $true
@@ -45,7 +45,7 @@ Describe 'SQL Server Policies' -Tag "ci" {
         }
 
         AfterAll {
-            Write-Host "cleaning up sql resources"
+            Write-Host "cleaning up sql resources ($resource_group_name)"
             az group delete --name $resource_group_name --yes
         }
 

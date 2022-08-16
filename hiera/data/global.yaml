@@ -1,5 +1,4 @@
 location: uksouth
-environment: global
 
 policies:
   sql_server_enable_private_link:
