@@ -4,7 +4,7 @@ lookup_options:
   policy_management_group_assignments:
     merge: first
 
-### Expected variables from fixture_outputs.json
+### Expected variables from fixture_outputs.json (fixture terraform outputs passed to hiera)
 # private_link_endpoint_subnet_id
 # assignment_resource_group_id
 

@@ -8,8 +8,8 @@ hierarchy:
  # main
   - name: options
     path: options.yaml
-  - name: management group
-    path: management_group/%{management_group}.yaml
+  - name: environment
+    path: environment/%{environment_name}.yaml
   - name: environment tier
     path: environment_tier/%{environment_tier}.yaml
   - name: global
