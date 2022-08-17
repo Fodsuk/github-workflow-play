@@ -1,4 +1,4 @@
-location: breaktheplan
+location: uksouth
 
 policies:
   sql_server_enable_private_link:
