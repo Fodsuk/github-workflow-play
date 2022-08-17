@@ -35,7 +35,8 @@ Describe 'SQL Server Policies' -Tag "ci" {
                 Write-Host "remediation task state: $provisioningState"
                 if (@("Accepted", "Evaluating", "Running") -contains $provisioningState) {
                     Start-Sleep -Seconds 60
-                } else {
+                }
+                else {
                     $remediation_running = $false
                 }
             }
