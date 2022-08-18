@@ -16,6 +16,8 @@ policy_resource_group_assignments:
     description: Permit what locations an engineer can create their resources
     resource_group_id: "%{lookup('fixture_outputs.allowed_locations_assignment_resource_group_id')}"
     managed_identity_required: true
+    metadata:
+      category: general
     non_compliance_message: You can only create resources in UKSouth or UKWest
     parameters_json: |
       {
