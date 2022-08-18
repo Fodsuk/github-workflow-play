@@ -9,7 +9,7 @@ permissions:
   contents: read
 jobs:
   terraform:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-ci.yml@v1.0.17
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-ci.yml@v1.0.18
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: ci
