@@ -7,6 +7,9 @@ lookup_options:
 ### Expected variables from fixture_outputs.json (fixture terraform outputs passed to hiera)
 # fixture_outputs.allowed_locations_assignment_resource_group_id
 
+policy_scope:
+  management_group_id: null
+
 policy_management_group_assignments: {}
 
 policy_resource_group_assignments:
