@@ -13,7 +13,7 @@ policy_management_group_assignments:
     display_name: "Allow certain locations for %{lookup('environment')}"
     description: Permit what locations an engineer can create their resources
     management_group_id: "%{lookup('management_group_id')}"
-    managed_identity_required: true
+    managed_identity_required: false
     metadata:
       category: general
     non_compliance_message: You can only create resources in UKSouth or UKWest
