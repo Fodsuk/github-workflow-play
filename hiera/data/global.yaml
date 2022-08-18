@@ -1,5 +1,8 @@
 location: uksouth
 
+policy_scope:
+  management_group_id: "%{lookup('management_group_id')}"
+
 policies:
   allowed_locations:
     policy_file: general/allowed_locations.json
