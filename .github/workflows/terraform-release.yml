@@ -5,7 +5,7 @@ permissions:
   contents: read
 jobs:
   plan_dev:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@v1.0.17
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-plan-stage.yml@main #v1.0.17
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp-reader

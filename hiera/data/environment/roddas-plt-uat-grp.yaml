@@ -1,1 +1,2 @@
 environment: uat
+management_group_id: /providers/Microsoft.Management/managementGroups/roddas-plt-uat-grp

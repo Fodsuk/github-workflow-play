@@ -1,1 +1,2 @@
 environment: dev
+management_group_id: /providers/Microsoft.Management/managementGroups/roddas-plt-dev-grp
