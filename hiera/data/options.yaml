@@ -2,6 +2,6 @@
   policies:
     merge: hash
   policy_resource_group_assignments:
-    merge: hash
+    merge: deep
   policy_management_group_assignments:
-    merge: hash
+    merge: deep

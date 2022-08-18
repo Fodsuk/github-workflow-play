@@ -3,3 +3,23 @@ location: uksouth
 policies:
   allowed_locations:
     policy_file: general/allowed_locations.json
+
+policy_management_group_assignments:
+  allowed_locations:
+    policy_key: allowed_locations
+    display_name: "Allow certain locations for %{lookup('environment')}"
+    description: Permit what locations an engineer can create their resources
+    management_group_id: "%{lookup('management_group_id')}"
+    managed_identity_required: true
+    metadata:
+      category: general
+    non_compliance_message: You can only create resources in UKSouth or UKWest
+    parameters_json: |
+      {
+         "listOfAllowedLocations": {
+           "value": ["UKSouth", "UKWest"]
+         },
+         "effect": {
+           "value": "Deny"
+         }
+      }

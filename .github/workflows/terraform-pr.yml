@@ -15,7 +15,7 @@ permissions:
   contents: read
 jobs:
   dev:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.17
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.18
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp-reader
@@ -29,7 +29,7 @@ jobs:
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   uat:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.17
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.18
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-uat-grp-reader
@@ -43,7 +43,7 @@ jobs:
       SUBSCRIPTION_ID: ${{ secrets.ENVIRONMENT_PRIMARY_SUBSCRIPTION_ID }}
       TENANT_ID: ${{ secrets.ENVIRONMENT_TENANT_ID }}
   prod:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.17
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.18
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-prd-grp-reader
