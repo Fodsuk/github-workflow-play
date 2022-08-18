@@ -21,7 +21,7 @@ resource "azurerm_management_group_policy_assignment" "schroders" {
     content {
       type = "UserAssigned"
       identity_ids = [
-        azurerm_user_assigned_identity.policy_managed_identity.principal_id
+        azurerm_user_assigned_identity.policy_managed_identity.id
       ]
     }
   }
