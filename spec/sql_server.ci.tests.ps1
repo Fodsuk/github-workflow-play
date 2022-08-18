@@ -41,6 +41,9 @@ Describe 'SQL Server Policies' -Tag "ci" {
                 }
             }
 
+            # just a little longer
+            Start-Sleep -Seconds 60
+
             $sql_private_link_count = az sql server show --ids "$sql_server_resource_id" --query "privateEndpointConnections | length(@)"
             $sql_private_link_count | Should -Be 1
         }
