@@ -174,7 +174,5 @@
         }
       }
     },
-    "id": "/providers/Microsoft.Authorization/policyDefinitions/8e8ca470-d980-4831-99e6-dc70d9f6af87",
-    "type": "Microsoft.Authorization/policyDefinitions",
-    "name": "8e8ca470-d980-4831-99e6-dc70d9f6af87"
+    "type": "Microsoft.Authorization/policyDefinitions"
   }
