@@ -5,23 +5,24 @@ lookup_options:
     merge: first
 
 ### Expected variables from fixture_outputs.json (fixture terraform outputs passed to hiera)
-# private_link_endpoint_subnet_id
-# assignment_resource_group_id
+# fixture_outputs.allowed_locations_assignment_resource_group_id
 
 policy_management_group_assignments: {}
 
 policy_resource_group_assignments:
-  ci_assignment_sql_server_enable_private_link:
-    policy_key: sql_server_enable_private_link
-    display_name: CI Sql Server Enable Private Link
-    description: CI Sql Server Enable Private Link
-    resource_group_id: "%{lookup('assignment_resource_group_id')}"
-    metadata:
-      purpose: CI
+  ci_assignment_allowed_locations:
+    policy_key: allowed_locations
+    display_name: Allow certain locations for roddatest
+    description: Permit what locations an engineer can create their resources
+    resource_group_id: "%{lookup('fixture_outputs.allowed_locations_assignment_resource_group_id')}"
     managed_identity_required: true
+    non_compliance_message: You can only create resources in UKSouth or UKWest
     parameters_json: |
       {
-        "privateEndpointSubnetId":{
-            "value":"%{lookup('private_link_endpoint_subnet_id')}"
-        }
+         "listOfAllowedLocations": {
+           "value": ["UKSouth", "UKWest"]
+         },
+         "effect": {
+           "value": "Deny"
+         }
       }

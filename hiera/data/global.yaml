@@ -1,8 +1,5 @@
 location: uksouth
 
 policies:
-  sql_server_enable_private_link:
-    policy_file: sql_server/enable_private_link.json
-    managed_identity_required_roles:
-      - Network Contributor
-      - SQL Server Contributor
+  allowed_locations:
+    policy_file: general/allowed_locations.json

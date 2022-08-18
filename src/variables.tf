@@ -56,6 +56,7 @@ variable "policy_resource_group_assignments" {
     metadata                  = map(string)
     parameters_json           = optional(string)
     managed_identity_required = bool
+    non_compliance_message    = string
   }))
 
   default = {}
@@ -70,6 +71,7 @@ variable "policy_management_group_assignments" {
     metadata                  = map(string)
     parameters_json           = optional(string)
     managed_identity_required = bool
+    non_compliance_message    = string
   }))
 
   default = {}

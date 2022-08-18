@@ -25,4 +25,7 @@ resource "azurerm_management_group_policy_assignment" "schroders" {
       ]
     }
   }
+  non_compliance_message {
+    content = each.value.non_compliance_message
+  }
 }
