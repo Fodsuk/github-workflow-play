@@ -29,4 +29,21 @@ locals {
     }...
   }
 
+  management_group_policy_assignments_by_policy = {
+    for key, assignment in var.policy_management_group_assignments : assignment.policy_key => {
+      policy_key            = assignment.policy_key
+      id                    = azurerm_management_group_policy_assignment.schroders[key].id
+      name                  = azurerm_management_group_policy_assignment.schroders[key].name
+      display_name          = azurerm_management_group_policy_assignment.schroders[key].display_name
+      management_group_id   = azurerm_management_group_policy_assignment.schroders[key].management_group_id
+      management_group_name = split("/", azurerm_management_group_policy_assignment.schroders[key].management_group_id)[4]
+      policy_definition_id  = azurerm_policy_definition.schroders[assignment.policy_key].id
+    }...
+  }
+
+  policy_scope = {
+    id   = coalesce(var.policy_scope.management_group_id, data.azurerm_subscription.current.id)
+    type = var.policy_scope.management_group_id != null ? "management_group" : "subscription"
+  }
+
 }

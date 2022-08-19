@@ -1,2 +1,13 @@
 environment: uat
 management_group_id: /providers/Microsoft.Management/managementGroups/roddas-plt-uat-grp
+policy_management_group_assignments:
+  allowed_locations:
+    parameters_json: |
+      {
+         "listOfAllowedLocations": {
+           "value": ["UKSouth", "UKWest"]
+         },
+         "effect": {
+           "value": "Disabled"
+         }
+      }
