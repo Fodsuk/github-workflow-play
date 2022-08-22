@@ -24,7 +24,10 @@ variable "policy_scope" {
   default = {
     management_group_id = null
   }
-  description = "Where policy sets, definitions and assignments will be scoped. Default will scope to current subscription."
+  description = <<-DESCRIPTION
+    Where policy sets and definitions will be scoped.
+    If a management_group_id is not provided then the default scope is the current subscription."
+  DESCRIPTION
 }
 
 variable "policy_sets" {

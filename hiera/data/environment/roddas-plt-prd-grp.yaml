@@ -1,14 +1,2 @@
 environment: prd
 management_group_id: /providers/Microsoft.Management/managementGroups/roddas-plt-prd-grp
-
-policy_management_group_assignments:
-  allowed_locations:
-    parameters_json: |
-      {
-         "listOfAllowedLocations": {
-           "value": ["UKSouth", "UKWest"]
-         },
-         "effect": {
-           "value": "Audit"
-         }
-      }

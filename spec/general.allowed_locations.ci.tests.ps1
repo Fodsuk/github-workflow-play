@@ -8,7 +8,7 @@ BeforeAll {
 
 Describe 'General Policies' -Tag "ci" {
 
-    Context 'Policy: allowed' {
+    Context 'Policy: allowed locations' {
 
         BeforeAll {
             $resource_group_id = $terraform_outputs.resource_group_policy_assignments_by_policy.value.allowed_locations[0].resource_group_id
@@ -17,7 +17,8 @@ Describe 'General Policies' -Tag "ci" {
 
         It 'Resources cant be created in disallowed locations' {
            $vnet_net = -join ((97..122) | Get-Random -Count 18 | % { [char]$_ })
-           $outcome = ((az network vnet create --location EastUS --name $vnet_net --resource-group $resource_group_name --address-prefix 10.0.0.0/16 --subnet-name MySubnet --subnet-prefix 10.0.0.0/24 --output table)  2>&1 | Out-String)
+           $outcome = ((az network vnet create --location EastUS --name $vnet_net --resource-group $resource_group_name --address-prefix 10.0.0.0/16 --subnet-name MySubnet --subnet-prefix 10.0.0.0/24 --output table --verbose)  2>&1 | Out-String)
+           Write-Host $outcome
            $outcome | Should -Match "'You can only create resources in UKSouth or UKWest'"
         }
 
