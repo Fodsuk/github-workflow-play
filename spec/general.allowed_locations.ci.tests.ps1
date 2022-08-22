@@ -28,6 +28,16 @@ Describe 'General Policies' -Tag "ci" {
             $provisioning_state | Should -Be Succeeded
          }
 
+         It 'should fail and output' {
+            Write-Host "WRONG"
+            1 | Should -Be 2
+         }
+
+         It 'should be successful and output' {
+            Write-Host "CORRECT"
+            1 | Should -Be 1
+         }
+
     }
 
 }
