@@ -24,7 +24,7 @@ Describe 'General Policies' {
         }
     }
 
-    Context 'Policy: allowed locations (uat)' -Tag "uat" {
+    Context 'Policy: allowed locations (uat)' -Tag "management-group-roddas-plt-uat-grp" {
 
         It 'Assignment is disabled in UAT' {
             $allow_locations_assignment_id = $allow_locations_assignment.id
