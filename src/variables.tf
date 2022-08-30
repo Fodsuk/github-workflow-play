@@ -26,7 +26,7 @@ variable "policy_scope" {
   }
   description = <<-DESCRIPTION
     Where policy sets and definitions will be scoped.
-    If a management_group_id is not provided then the default scope is the current subscription."
+    If a management_group_id is not provided then the default scope is the current subscription.
   DESCRIPTION
 }
 
