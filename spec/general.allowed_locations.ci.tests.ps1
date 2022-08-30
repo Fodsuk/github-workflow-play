@@ -14,7 +14,7 @@ Describe 'General Policies' -Tag "ci" {
             $resource_group_id = $terraform_outputs.resource_group_policy_assignments_by_policy.value.allowed_locations[0].resource_group_id
             $resource_group_name = ($resource_group_id -replace '.*\/')
 
-            Start-Sleep -Seconds 60 # race condition - policy assignments being created and checking they work.
+            az policy state trigger-scan -g $resource_group_name
         }
 
         It 'Resources cant be created in disallowed locations' {
