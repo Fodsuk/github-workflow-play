@@ -15,7 +15,7 @@ permissions:
   contents: read
 jobs:
   dev:
-    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@v1.0.19
+    uses: Fodsuk/workflow-templates/.github/workflows/template-terraform-pull_request-stage.yml@feature/break-down-composite-actions
     with:
       TERRAFORM_VERSION: 1.2.6
       ENVIRONMENT: management-group-roddas-plt-dev-grp-reader
